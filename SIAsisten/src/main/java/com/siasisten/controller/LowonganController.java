@@ -5,11 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class SIAsistenController {
-	@RequestMapping("/")
+public class LowonganController {
+	@RequestMapping("/lowongan")
     public String index (Model model)
     {
-    	model.addAttribute("pageTitle", "Home");
+    	model.addAttribute("pageTitle", "Lowongan");
         return "index";
     }
 }
