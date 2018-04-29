@@ -41,8 +41,15 @@
 				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item" th:classappend="${pageTitle == 'Home' ? 'active':''}">
-							<a class="nav-link" href="/">Lowongan</a>
+						<li class="nav-item dropdown" th:classappend="${pageTitle == 'Home' ? 'active':''}">
+							<a class="nav-link dropdown-toggle" href="#"
+								id="navbarDropdownMenuLink" data-toggle="dropdown">
+								Lowongan
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="#">Lihat Lowongan</a>
+								<a class="dropdown-item" href="#">Tambah Lowongan</a>
+							</div>
 						</li>
 					</ul>
 					
