@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="assets">
+	<meta charset="UTF-8">
 	<title th:text="${pageTitle}"></title>
-	<link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/Bootstrap/css/bootstrap-datepicker.min.css" />
-	<script type="text/javascript" src="/jQuery/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="/Bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/Bootstrap/js/bootstrap-datepicker.min.js"></script>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/bootstrap-datepicker.min.css}" rel="stylesheet" />
+	
+	<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
 	<style>
 		html, body {
 		  height: 100%;
@@ -24,17 +26,12 @@
 		  height: 50px;
 		}
 	</style>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		
-	});
-	</script>
 </head>
 <body>
 	<div th:fragment="header">
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-				<a class="navbar-brand" href="#">SIAsisten</a>
+				<a class="navbar-brand" href="/">SIAsisten</a>
 				<button class="navbar-toggler" type="button" 
 					data-toggle="collapse" data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-exapanded="false"
@@ -45,9 +42,24 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item" th:classappend="${pageTitle == 'Home' ? 'active':''}">
-							<a class="nav-link" href="/">Home</a>
+							<a class="nav-link" href="/">Lowongan</a>
 						</li>
 					</ul>
+					
+					<div class="form-inline my-2 my-lg-0 text-right">
+						<div th:if="${#httpServletRequest.remoteUser} == null">
+							<a href="/login">
+					    		<input type="submit" class="btn btn-success" value="Sign In" />
+					    	</a>
+						</div>
+						<div th:unless="${#httpServletRequest.remoteUser} == null">
+						    <form th:action="@{/logout}" method="post" class="form-inline">
+						    	<p th:text=" 'Login as ' + ${#httpServletRequest.remoteUser}" 
+									class="text-white" style="margin-top:10px; margin-right:10px;">Login as</p>
+						    	<input type="submit" class="btn btn-xs btn-danger" value="Sign Out" />
+						    </form>
+					    </div>
+					</div>
 				</div>
 			</nav>
 		</header>
