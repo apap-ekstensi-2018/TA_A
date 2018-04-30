@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/Bootstrap/css/bootstrap-datepicker.min.css" />
+	<script type="text/javascript" src="/jQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/Bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Bootstrap/js/bootstrap-datepicker.min.js"></script>
+<meta charset="ISO-8859-1">
+<title>Tambah Lowongan</title>
+</head>
+<body>
+	<div th:replace="fragments/fragment :: header"></div>
+	<div class="container">
+		<div>
+			<h3>Tambah Lowongan</h3>
+		</div>
+	</div>
+	<div class="container">
+		<form action="/lowongan/tambah" method="post">
+			<div>
+				<select type = "text" name="idMatkul" class="form-control">
+					<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
+					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
+				</select>
+			</div>
+			<div>
+				<select name="isOpen" class="form-control">
+					<option>--Pilih Status--</option>	
+					<option value=1>Buka</option>
+					<option value=0>Tutup</option>
+				</select>
+			</div>
+			<div>
+				<label for="jmlLowongan">Jumlah Lowongan :<input type="text" class="form-control" name="jmlLowongan" required="required"/> </label> 
+			</div>
+			<button type="submit" name="action" class="btn btn-primary">Simpan</button>
+		</form>
+	</div>
+	<div th:replace="fragments/fragment :: footer"></div>
+</body> 
+</html>
