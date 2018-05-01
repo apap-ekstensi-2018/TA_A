@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Success Update</title>
+		<head th:replace="fragments/fragment :: assets" />
+	</head>
+	<body>
+		<div th:replace="fragments/fragment :: header"></div>
+		<div style="padding-left: 1.8ch;">
+			<h2>Sukses</h2>
+			<h5 th:text="${message}"></h5>
+		</div>
+		<div class="push"></div>
+		<div th:replace="fragments/fragment :: footer"></div>
+	</body>
+</html>

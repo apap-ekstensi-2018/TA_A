@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.MatkulDAO;
 import com.siasisten.model.LowonganModel;
@@ -64,9 +65,31 @@ public class LowonganController {
 	    	model.addAttribute("lm", lm);
 	    	model.addAttribute("isopen",isopen);
 	    	model.addAttribute("matkul", mk);
-	    	System.out.println(mk.getNama_matkul());
 	    return "view";
     }
 	
-
+	@RequestMapping("/lowongan/ubah/{id_lowongan}")
+	public String lowonganUbah (Model model, @PathVariable(value = "id_lowongan", required = false) int id_lowongan) 
+	{
+		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(id_lowongan);
+		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
+		boolean is_open = lowongan.isOpen();
+		model.addAttribute("matkul", matkul);
+		model.addAttribute("is_open", is_open);
+		model.addAttribute("lowongan", lowongan);
+		return "ubah-lowongan";
+	}
+	
+	@PostMapping("/lowongan/ubah/submit")
+	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
+	   @RequestParam(value = "status", required = false) boolean statusFixed,
+	   @RequestParam(value = "jml_slot", required = false) int jml_slot,
+	   @RequestParam(value = "idlowongan", required = false) int idlowongan,
+	   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
+	{
+		LowonganModel lowongan = new LowonganModel(idlowongan, id_matkul, statusFixed, jml_slot);
+		lowonganDAO.updateLowongan(lowongan);
+		model.addAttribute("message", "Lowongan dengan id " + idlowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
+		return "success-update";
+	}
 }
