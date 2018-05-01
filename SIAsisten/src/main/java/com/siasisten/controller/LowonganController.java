@@ -27,7 +27,8 @@ public class LowonganController {
 	@Autowired
 	MatkulDAO matkulDao;
 
-	
+	private int idLowongan;
+	private int id_matkul;
 	
 	@RequestMapping("/lowongan")
     public String index (Model model)
@@ -77,19 +78,19 @@ public class LowonganController {
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
+		idLowongan = id_lowongan;
+	    id_matkul = matkul.getId();
 		return "ubah-lowongan";
 	}
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
-	   @RequestParam(value = "status", required = false) boolean statusFixed,
-	   @RequestParam(value = "jml_slot", required = false) int jml_slot,
-	   @RequestParam(value = "idlowongan", required = false) int idlowongan,
-	   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
+										   @RequestParam(value = "status", required = false) boolean statusFixed,
+										   @RequestParam(value = "jml_slot", required = false) int jml_slot) 
 	{
-		LowonganModel lowongan = new LowonganModel(idlowongan, id_matkul, statusFixed, jml_slot);
+		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, statusFixed, jml_slot);
 		lowonganDAO.updateLowongan(lowongan);
-		model.addAttribute("message", "Lowongan dengan id " + idlowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
+		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
 		return "success-update";
 	}
 }

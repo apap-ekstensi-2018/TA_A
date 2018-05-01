@@ -17,6 +17,6 @@ public interface LowonganMapper {
 	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan where id = #{idlowongan}")
     LowonganModel selectLowonganbyID (@Param("idlowongan") int idlowongan);
 	
-	@Update("UPDATE `lowongan` SET `is_open`=#{statusFixed},`jml_lowongan`=#{jml_slot} WHERE id=#{idlowongan}")
-	void updateLowongan (@Param("idlowongan")int idlowongan, @Param("id_matkul")int id_matkul, @Param("statusFixed")boolean statusFixed, @Param("jml_slot")int jml_slot);
+	@Update("UPDATE `lowongan` SET `is_open`=#{isOpen},`jml_lowongan`=#{jmlLowongan} WHERE id=#{id}")
+	void updateLowongan (LowonganModel student);
 }

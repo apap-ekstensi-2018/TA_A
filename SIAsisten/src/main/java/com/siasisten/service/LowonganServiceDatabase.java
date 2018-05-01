@@ -48,6 +48,7 @@ public class LowonganServiceDatabase implements LowonganService{
 	public void updateLowongan(LowonganModel student) {
 		log.info ("Update Data Lowongan");
 		// TODO Auto-generated method stub
+		LowonganMapper.updateLowongan(student);
 	}
 	
 	@Override
