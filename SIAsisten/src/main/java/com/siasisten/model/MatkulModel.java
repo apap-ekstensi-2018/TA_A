@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MatkulModel {
 	private int id;
-	private String kodeMatkul;
-	private String namaMatkul;
+	private String kode_matkul;
+	private String nama_matkul;
 }

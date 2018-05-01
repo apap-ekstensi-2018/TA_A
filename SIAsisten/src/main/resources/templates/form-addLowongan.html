@@ -13,7 +13,7 @@
 			<div>
 				<select name="idMatkul" class="form-control">
 					<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
-					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
+					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.nama_matkul}" th:value="${mata_kuliah.id}"></option>
 				</select>
 			</div>
 			<div>
