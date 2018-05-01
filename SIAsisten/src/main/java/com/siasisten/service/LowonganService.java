@@ -7,7 +7,8 @@ import com.siasisten.model.LowonganModel;
 public interface LowonganService {
 	LowonganModel selectLowongan (String id);
 
-
+	LowonganModel selectLowonganbyID (int idlowongan);
+	
     List<LowonganModel> selectAllLowongan ();
 
 

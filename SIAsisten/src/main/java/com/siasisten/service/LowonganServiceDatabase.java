@@ -1,14 +1,17 @@
 package com.siasisten.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.siasisten.dao.LowonganMapper;
 import com.siasisten.model.LowonganModel;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class LowonganServiceDatabase implements LowonganService{
@@ -46,4 +49,13 @@ public class LowonganServiceDatabase implements LowonganService{
 		log.info ("Update Data Lowongan");
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+    public LowonganModel selectLowonganbyID (int idlowongan)
+    {
+        log.info ("select Lowongan with id {}", idlowongan);
+        return LowonganMapper.selectLowonganbyID(idlowongan);
+    }
+
+
 }
