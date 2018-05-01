@@ -1,9 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>Ubah Lowongan</title>
-	<div th:replace="fragments/fragment :: assets"></div>
-</head>
+<head th:replace="fragments/fragment :: assets" />
+<script>
+	function myFunction() {
+		var jmlSlot;
+		jmlSlot = document.getElementById("jml_slot").value;
+		if (jmlSlot == ""){
+			alert("Jumlah slot tidak boleh kosong!");
+		}
+		else {
+			document.forms["myForm"].submit();
+		}
+	}
+</script>
 <body>
 	<div th:replace="fragments/fragment :: header"></div>
 	<form class="w3-container w3-card-4" id="myForm" action="/lowongan/ubah/submit" method="post">
@@ -11,6 +20,8 @@
 		<h3>Ubah Lowongan</h3>
 			<div>
 				<h6>Mata Kuliah</h6>
+				<input type="hidden" name="id_matkul" th:value="${matkul.id}" />
+				<input type="hidden" name="idlowongan" th:value="${lowongan.id}" />
 				<input class="w3-input w3-border w3-animate-input" type="text" style="width:30%" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/><br/><br/>
 			</div>
 			<div>
@@ -33,15 +44,3 @@
 	<div th:replace="fragments/fragment :: footer"></div>
 </body>
 </html>
-<script>
-	function myFunction() {
-		var jmlSlot;
-		jmlSlot = document.getElementById("jml_slot").value;
-		if (jmlSlot == ""){
-			alert("Jumlah slot tidak boleh kosong!");
-		}
-		else {
-			document.forms["myForm"].submit();
-		}
-	}
-</script>

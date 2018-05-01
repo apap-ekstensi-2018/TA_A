@@ -68,9 +68,6 @@ public class LowonganController {
 	    return "view";
     }
 	
-	private int idlowongan;
-	private int id_matkul;
-	
 	@RequestMapping("/lowongan/ubah/{id_lowongan}")
 	public String lowonganUbah (Model model, @PathVariable(value = "id_lowongan", required = false) int id_lowongan) 
 	{
@@ -80,15 +77,15 @@ public class LowonganController {
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
-		idlowongan = id_lowongan;
-		id_matkul = lowongan.getIdMatkul();
 		return "ubah-lowongan";
 	}
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
 	   @RequestParam(value = "status", required = false) boolean statusFixed,
-	   @RequestParam(value = "jml_slot", required = false) int jml_slot) 
+	   @RequestParam(value = "jml_slot", required = false) int jml_slot,
+	   @RequestParam(value = "idlowongan", required = false) int idlowongan,
+	   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
 	{
 		LowonganModel lowongan = new LowonganModel(idlowongan, id_matkul, statusFixed, jml_slot);
 		lowonganDAO.updateLowongan(lowongan);
