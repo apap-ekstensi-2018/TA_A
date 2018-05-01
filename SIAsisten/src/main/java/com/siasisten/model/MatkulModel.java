@@ -10,17 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MatkulModel {
-	
+	@JsonProperty("id")
 	private int id;
-
-	private String kode_matkul;
-	private String nama_matkul;
-
-	
-//	@JsonProperty("kode_matkul")
-//	private String kodeMatkul;
-//	
-//	@JsonProperty("nama_matkul")
-//	private String namaMatkul;
-
+	@JsonProperty("kode_matkul")
+	private String kodeMatkul;
+	@JsonProperty("nama_matkul")
+	private String namaMatkul;
 }

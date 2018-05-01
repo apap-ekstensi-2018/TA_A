@@ -11,12 +11,9 @@ public interface LowonganService {
 	
     List<LowonganModel> selectAllLowongan ();
 
-
     void addLowongan (LowonganModel student);
 
-
     void deleteLowongan (LowonganModel student);
-    
     
     void updateLowongan (LowonganModel student);
 }
