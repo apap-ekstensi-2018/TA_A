@@ -39,7 +39,7 @@ public class LowonganController {
 	
 
 	@RequestMapping("/lowongan/tambah")
-	public String tambahLowongan(@ModelAttribute ("lowongan") LowonganModel lowongan, Model model)
+	public String tambahLowongan(Model model, @ModelAttribute("lowongan") LowonganModel lowongan)
 	{
 		List<MatkulModel> matkul = matkulDao.selectAllMatkul();
 		model.addAttribute("matkul", matkul);
@@ -47,21 +47,29 @@ public class LowonganController {
 			return "form-addLowongan";
 		}
 		else {
-			model.addAttribute("idMatkul", lowongan.getIdMatkul());
-			model.addAttribute("message", "Lowongan dengan Mata Kuliah" + lowongan.getIdMatkul() + "berhasil ditambahkan");
-			lowonganDAO.addLowongan(lowongan);
-			return "berhasil-tambah";
+			if (isExistLowongan(lowongan.getIdMatkul())> 0) {
+				return "failed-add";
+			}
+			else {
+				model.addAttribute("idMatkul", lowongan.getIdMatkul());
+				model.addAttribute("message", "Lowongan dengan Mata Kuliah" + lowongan.getIdMatkul() + "berhasil ditambahkan");
+				lowonganDAO.addLowongan(lowongan);
+				return "success-add";
+			}
 		}
-	
 	}
-
+	
+	public int isExistLowongan(int idMatkul) {
+		return lowonganDAO.cekLowongan(idMatkul);
+	}
+	
 	@RequestMapping("/lowongan/view/{idlowongan}")
     public String cariLowongan (Model model,
             @PathVariable(value = "idlowongan") int idlowongan)
     {
 		LowonganModel lm = lowonganDAO.selectLowonganbyID(idlowongan);
 		MatkulModel mk = matkulDao.selectMatkulbyId(lm.getIdMatkul());
-		boolean isopen = lm.isOpen();
+		int isopen = lm.getIsOpen();
 		model.addAttribute("tittle", "Cari Lowongan");
 	    	model.addAttribute("lm", lm);
 	    	model.addAttribute("isopen",isopen);
@@ -74,7 +82,7 @@ public class LowonganController {
 	{
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(id_lowongan);
 		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
-		boolean is_open = lowongan.isOpen();
+		int is_open = lowongan.getIsOpen();
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
@@ -85,7 +93,7 @@ public class LowonganController {
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
-										   @RequestParam(value = "status", required = false) boolean statusFixed,
+										   @RequestParam(value = "status", required = false) int statusFixed,
 										   @RequestParam(value = "jml_slot", required = false) int jml_slot) 
 	{
 		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, statusFixed, jml_slot);
@@ -107,5 +115,4 @@ public class LowonganController {
             return "not-found";
         }
     }
-
 }

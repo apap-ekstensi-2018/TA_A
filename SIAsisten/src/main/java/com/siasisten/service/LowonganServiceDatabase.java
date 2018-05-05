@@ -17,14 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 public class LowonganServiceDatabase implements LowonganService{
 	@Autowired
 	private LowonganMapper LowonganMapper;
-
-	@Override
-    public LowonganModel selectLowonganbyID (int idlowongan)
-    {
-        log.info ("select Lowongan with id {}", idlowongan);
-        return LowonganMapper.selectLowonganbyID(idlowongan);
-    }
 	
+	@Override
+	public LowonganModel selectLowongan(String id) {
+		log.info ("Select Data Lowongan with Id {}", id);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public List<LowonganModel> selectAllLowongan() {
 		log.info ("Select All Data Lowongan");
@@ -50,6 +50,16 @@ public class LowonganServiceDatabase implements LowonganService{
 		// TODO Auto-generated method stub
 		LowonganMapper.deleteLowongan(idlowongan);
 	}
+	
+	@Override
+    public LowonganModel selectLowonganbyID (int idlowongan)
+    {
+        log.info ("select Lowongan with id {}", idlowongan);
+        return LowonganMapper.selectLowonganbyID(idlowongan);
+    }
 
-
+	@Override
+	public int cekLowongan(int id_matkul) {
+		return LowonganMapper.cekLowongan( id_matkul);
+	}
 }

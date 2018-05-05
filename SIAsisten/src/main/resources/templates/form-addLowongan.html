@@ -9,11 +9,11 @@
 		</div>
 	</div>
 	<div class="container">
-		<form action="/lowongan/tambah" method="post">
+		<form id="myForm" action="/lowongan/tambah" method="post">
 			<div>
 				<select name="idMatkul" class="form-control">
 					<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
-					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.nama_matkul}" th:value="${mata_kuliah.id}"></option>
+					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
 				</select>
 			</div>
 			<div>
@@ -24,11 +24,23 @@
 				</select>
 			</div>
 			<div>
-				<label for="jmlLowongan">Jumlah Lowongan :<input type="text" class="form-control" name="jmlLowongan" required="required"/> </label> 
+				<label for="jmlLowongan">Jumlah Lowongan :<input type="text" class="form-control" id="jmlLowongan" name="jmlLowongan" required="required"/> </label> 
 			</div>
-			<button type="submit" name="action" class="btn btn-primary">Simpan</button>
+			<button onclick="myFunction()" type="button" name="action" class="btn btn-primary">Simpan</button>
 		</form>
 	</div>
 	<div th:replace="fragments/fragment :: footer"></div>
 </body> 
 </html>
+<script>
+	function myFunction() {
+		var jmlSlot;
+		jmlSlot = document.getElementById("jmlLowongan").value;
+		if (jmlSlot == ""){
+			alert("Jumlah slot tidak boleh kosong!");
+		}
+		else {
+			document.forms["myForm"].submit();
+		}
+	}
+</script>
