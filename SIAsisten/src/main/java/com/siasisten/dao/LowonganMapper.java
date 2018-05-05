@@ -25,8 +25,8 @@ public interface LowonganMapper {
 	@Select("select count(id) from lowongan where id_matkul=#{id_matkul}")
 	int cekLowongan(int id_matkul);
 
-	@Update("UPDATE `lowongan` SET `is_open`=#{statusFixed},`jml_lowongan`=#{jml_slot} WHERE id=#{idlowongan}")
-	void updateLowongan (@Param("idlowongan")int idlowongan, @Param("id_matkul")int id_matkul, @Param("statusFixed")int statusFixed, @Param("jml_slot")int jml_slot);
+	@Update("UPDATE `lowongan` SET `is_open`=#{isOpen},`jml_lowongan`=#{jmlLowongan} WHERE id=#{idMatkul}")
+	void updateLowongan (LowonganModel lowongan);
 		
 	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan")
 	List<LowonganModel> selectAllLowongan();
