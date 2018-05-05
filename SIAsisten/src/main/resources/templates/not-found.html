@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Not Found</title>
+		<head th:replace="fragments/fragment-new :: assets" />
+	</head>
+	<body>
+		<div th:replace="fragments/fragment-new :: header"></div>
+			<div class="content-wrapper">
+				<div class="container-fluid">
+					<h2>Not Found</h2>
+					<h5 th:text="'Id ' + ${idlowongan} + ' tidak ditemukan'"></h5>
+				</div>
+			</div>
+		<div th:replace="fragments/fragment-new :: footer"></div>
+	</body>
+</html>
