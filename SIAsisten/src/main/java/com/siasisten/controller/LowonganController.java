@@ -18,8 +18,13 @@ import com.siasisten.dao.MatkulDAO;
 import com.siasisten.model.LowonganModel;
 import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
+import com.siasisten.model.RuanganMatkulModel;
 import com.siasisten.service.LowonganService;
+
 import com.siasisten.service.MatkulService;
+
+import com.siasisten.service.RuanganMatkulService;
+
 
 @Controller
 public class LowonganController {
@@ -31,7 +36,13 @@ public class LowonganController {
 	MatkulDAO matkulDao;
 	
 	@Autowired
+
 	MatkulService matkulService;
+	
+	
+	@Autowired
+	RuanganMatkulService ruanganMatkulDAO;
+
 
 	private int idLowongan;
 	private int id_matkul;
@@ -75,11 +86,18 @@ public class LowonganController {
     {
 		LowonganModel lm = lowonganDAO.selectLowonganbyID(idlowongan);
 		MatkulModel mk = matkulDao.selectMatkulbyId(lm.getIdMatkul());
+
 		int isopen = lm.getIsOpen();
+
+		List<RuanganMatkulModel> rm = ruanganMatkulDAO.selectRuanganbyIdMatkul(mk.getId());
+		
+
 		model.addAttribute("tittle", "Cari Lowongan");
 	    	model.addAttribute("lm", lm);
 	    	model.addAttribute("isopen",isopen);
 	    	model.addAttribute("matkul", mk);
+	    	model.addAttribute("ruangan", rm);
+	    	System.out.println("id ruangan"+rm);
 	    return "view";
     }
 	

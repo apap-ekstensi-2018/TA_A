@@ -5,9 +5,12 @@
 	<div th:replace="fragments/fragment :: assets"/>
 </head>
 <body>
+
 	<div th:replace="fragments/fragment :: header"></div>
+
 	<div class="content-wrapper">
-		<div class="container-fluid">
+	
+		<div class="container">
 			<form class="w3-container w3-card-4" id="myForm" action="/lowongan/ubah/submit" method="post">
 				<h3>Ubah Lowongan</h3>
 					<div>
@@ -31,7 +34,9 @@
 			</form>
 		</div>
 	</div>
+
 	<div th:replace="fragments/fragment :: footer"></div>
+
 </body>
 </html>
 <script>
