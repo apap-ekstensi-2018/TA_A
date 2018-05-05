@@ -93,4 +93,19 @@ public class LowonganController {
 		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
 		return "success-update";
 	}
+	
+	@RequestMapping("/lowongan/delete/{id_lowongan}")
+    public String deleteLowongan (Model model, @PathVariable(value = "id_lowongan", required = false) int idlowongan)
+    {
+		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(idlowongan);
+        if (lowongan != null) {
+        	lowonganDAO.deleteLowongan(idlowongan);
+        	model.addAttribute("message", "Lowongan dengan id " + lowongan.getId() + " berhasil dihapus");
+            return "success-delete";
+        } else {
+            model.addAttribute ("idlowongan", idlowongan);
+            return "not-found";
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.siasisten.dao;
 
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +20,8 @@ public interface LowonganMapper {
 	
 	@Update("UPDATE `lowongan` SET `is_open`=#{isOpen},`jml_lowongan`=#{jmlLowongan} WHERE id=#{id}")
 	void updateLowongan (LowonganModel student);
+	
+	@Delete("DELETE FROM `lowongan` WHERE id=#{idlowongan}")
+	void deleteLowongan (@Param("idlowongan")int idlowongan); 
+
 }
