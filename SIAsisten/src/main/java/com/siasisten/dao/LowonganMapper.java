@@ -1,6 +1,8 @@
 package com.siasisten.dao;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,6 +19,10 @@ public interface LowonganMapper {
 	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan where id = #{idlowongan}")
     LowonganModel selectLowonganbyID (@Param("idlowongan") int idlowongan);
 	
+	//gw ganti tipe data statusFixed ke int - Fadly
 	@Update("UPDATE `lowongan` SET `is_open`=#{statusFixed},`jml_lowongan`=#{jml_slot} WHERE id=#{idlowongan}")
-	void updateLowongan (@Param("idlowongan")int idlowongan, @Param("id_matkul")int id_matkul, @Param("statusFixed")boolean statusFixed, @Param("jml_slot")int jml_slot);
+	void updateLowongan (@Param("idlowongan")int idlowongan, @Param("id_matkul")int id_matkul, @Param("statusFixed")int statusFixed, @Param("jml_slot")int jml_slot);
+		
+	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan")
+	List<LowonganModel> selectAllLowongan();
 }

@@ -92,9 +92,7 @@ CREATE TABLE IF NOT EXISTS pengajuan (
   is_accepted TINYINT(1) NOT NULL,
   PRIMARY KEY (id, id_lowongan, username_mahasiswa),
   CONSTRAINT FK_Pengajuan_Lowongan FOREIGN KEY (id_lowongan)
-    REFERENCES lowongan(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT FK_Pengajuan_User FOREIGN KEY (username_mahasiswa)
-    REFERENCES user_account(username) ON DELETE CASCADE ON UPDATE CASCADE
+    REFERENCES lowongan(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ENGINE = INNODB
 AUTO_INCREMENT = 6

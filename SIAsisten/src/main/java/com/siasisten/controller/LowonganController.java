@@ -1,6 +1,7 @@
 package com.siasisten.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.MatkulDAO;
 import com.siasisten.model.LowonganModel;
+import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
 import com.siasisten.service.LowonganService;
+import com.siasisten.service.MatkulService;
 
 @Controller
 public class LowonganController {
@@ -26,6 +29,9 @@ public class LowonganController {
 	
 	@Autowired
 	MatkulDAO matkulDao;
+	
+	@Autowired
+	MatkulService matkulService;
 
 	
 	
@@ -60,7 +66,7 @@ public class LowonganController {
     {
 		LowonganModel lm = lowonganDAO.selectLowonganbyID(idlowongan);
 		MatkulModel mk = matkulDao.selectMatkulbyId(lm.getIdMatkul());
-		boolean isopen = lm.isOpen();
+		int isopen = lm.getIsOpen(); //gw ganti methodnya ke getIsOpen sama tipe data ke int - Fadly
 		model.addAttribute("tittle", "Cari Lowongan");
 	    	model.addAttribute("lm", lm);
 	    	model.addAttribute("isopen",isopen);
@@ -73,7 +79,7 @@ public class LowonganController {
 	{
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(id_lowongan);
 		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
-		boolean is_open = lowongan.isOpen();
+		int is_open = lowongan.getIsOpen(); //gw ganti methodnya ke getIsOpen sama tipe data ke int - Fadly
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
@@ -82,7 +88,7 @@ public class LowonganController {
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
-	   @RequestParam(value = "status", required = false) boolean statusFixed,
+	   @RequestParam(value = "status", required = false) int statusFixed,
 	   @RequestParam(value = "jml_slot", required = false) int jml_slot,
 	   @RequestParam(value = "idlowongan", required = false) int idlowongan,
 	   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
@@ -92,4 +98,23 @@ public class LowonganController {
 		model.addAttribute("message", "Lowongan dengan id " + idlowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
 		return "success-update";
 	}
+	
+	@RequestMapping("/lowongan/viewall")
+    public String cariSemuaLowongan (Model model)
+    {
+		List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
+		List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
+		model.addAttribute("allLowongan", allLowongan);
+		for(LowonganModel lMod : allLowongan) {
+			LowonganModelDTO lDto = new LowonganModelDTO();
+			lDto.setId(lMod.getId());
+			MatkulModel mMod = matkulService.selectMatkulbyId(lMod.getIdMatkul());
+			lDto.setNamaMatkul(mMod.getNamaMatkul());
+			lDto.setIsOpen(lMod.getIsOpen());
+			lDto.setJmlLowongan(lMod.getJmlLowongan());
+			allLowonganDTO.add(lDto);
+		}
+		model.addAttribute("allLowonganDTO", allLowonganDTO);
+	    return "viewall";
+    }
 }
