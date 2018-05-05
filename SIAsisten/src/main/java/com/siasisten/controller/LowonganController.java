@@ -1,6 +1,7 @@
 package com.siasisten.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.MatkulDAO;
 import com.siasisten.model.LowonganModel;
+import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
 import com.siasisten.service.LowonganService;
+import com.siasisten.service.MatkulService;
 
 @Controller
 public class LowonganController {
@@ -26,6 +29,9 @@ public class LowonganController {
 	
 	@Autowired
 	MatkulDAO matkulDao;
+	
+	@Autowired
+	MatkulService matkulService;
 
 	private int idLowongan;
 	private int id_matkul;
@@ -114,5 +120,25 @@ public class LowonganController {
             model.addAttribute ("idlowongan", idlowongan);
             return "not-found";
         }
+
+    }
+	
+	@RequestMapping("/lowongan/viewall")
+    public String cariSemuaLowongan (Model model)
+    {
+		List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
+		List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
+		model.addAttribute("allLowongan", allLowongan);
+		for(LowonganModel lMod : allLowongan) {
+			LowonganModelDTO lDto = new LowonganModelDTO();
+			lDto.setId(lMod.getId());
+			MatkulModel mMod = matkulService.selectMatkulbyId(lMod.getIdMatkul());
+			lDto.setNamaMatkul(mMod.getNamaMatkul());
+			lDto.setIsOpen(lMod.getIsOpen());
+			lDto.setJmlLowongan(lMod.getJmlLowongan());
+			allLowonganDTO.add(lDto);
+		}
+		model.addAttribute("allLowonganDTO", allLowonganDTO);
+	    return "viewall";
     }
 }

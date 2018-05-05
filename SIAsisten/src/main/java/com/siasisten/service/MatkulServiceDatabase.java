@@ -3,10 +3,14 @@ package com.siasisten.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.siasisten.dao.MatkulDAO;
 import com.siasisten.model.MatkulModel;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
 public class MatkulServiceDatabase implements MatkulService{
 	@Autowired
 	private MatkulDAO matkulDao;

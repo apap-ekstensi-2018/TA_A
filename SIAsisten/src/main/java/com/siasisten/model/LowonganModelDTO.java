@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LowonganModel {
+public class LowonganModelDTO {
 	@NotNull
 	private int id;
 	@NotNull
-	private int idMatkul;
+	private String namaMatkul;
 	@NotNull
 	private int isOpen;
 	@NotNull @NumberFormat(style = Style.NUMBER) @Min(1)
