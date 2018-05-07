@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="fragments/fragment :: assets" />
+	<head th:replace="fragments/fragment-new :: assets" />
 	<body>
-	<div th:replace = "fragments/fragment :: header" ></div>
-	<div class="container">
-	<h1 class="page-header">Data Lowongan</h1>
-	<br>
+	<aside id="left-panel" class="left-panel">
+        		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+	</aside>
+	<div id="right-panel" class="right-panel">
+					<div th:replace = "fragments/fragment-new :: right-panel"></div>
+						<div class="container">
+						
+						<br>
+						
+							<form>
+								<div class="form-row">
+									
+									
+									<div class="form-group col-md-4">
+									<label for="mk">Mata Kuliah</label> 
+									</div>
+									<div class="form-group col-md-6">
+									<input class="form-control" type="text" name="mk" th:value="${matkul.namaMatkul}" readonly="true"/>
+						
+						
+									</div>
+									<div class="form-group col-md-4">
+									<label for="mk">Daftar Ruangan</label> 
+									</div>
+									<div class="form-group col-md-6">
+									<table>
+									<tr th:each="ruangan,iterationStatus: ${ruangan}">
+										<td th:text="' ' + ${ruangan.idRuangan == 1}? 'Ruang 3212B':'Ruang 3131A'"></td>
+									</tr>
+									</table>
+						
+									</div>
+									
+								
+									<div class="form-group col-md-4">
+									<label for="sl">Status Lowongan</label> 
+									</div>
+									<div class="form-group col-md-6">
+									<input class="form-control" type="text" name="sl" th:value="${isopen==1}?'Buka':'Tutup'" readonly="true"/>
+									</div>
+								
+									<div class="form-group col-md-4">
+									<label for="jml" >Jumlah Slot Asisten</label>
+									</div>
+									<div class="form-group col-md-6">
+									<input class="form-control" type="text" name="jml" th:value="${lm.jmlLowongan}+' Asisten'" readonly="true"/>
+									</div>
+							</div>
+						</div>
 	
-		<form>
-		<div class="form-row">
-			
-			
-			<div class="form-group col-md-4">
-			<label for="mk">Mata Kuliah</label> 
-			</div>
-			<div class="form-group col-md-6">
-			<input class="form-control" type="text" name="mk" th:value="${matkul.namaMatkul}" readonly="true"/>
-
-
-			</div>
-			<div class="form-group col-md-4">
-			<label for="mk">Daftar Ruangan</label> 
-			</div>
-			<div class="form-group col-md-6">
-			<table>
-			<tr th:each="ruangan,iterationStatus: ${ruangan}">
-				<td th:text="' ' + ${ruangan.idRuangan == 1}? 'Ruang 3212B':'Ruang 3131A'"></td>
-			</tr>
-			</table>
-
-			</div>
-			
-		
-			<div class="form-group col-md-4">
-			<label for="sl">Status Lowongan</label> 
-			</div>
-			<div class="form-group col-md-6">
-			<input class="form-control" type="text" name="sl" th:value="${isopen==1}?'Buka':'Tutup'" readonly="true"/>
-			</div>
-		
-			<div class="form-group col-md-4">
-			<label for="jml" >Jumlah Slot Asisten</label>
-			</div>
-			<div class="form-group col-md-6">
-			<input class="form-control" type="text" name="jml" th:value="${lm.jmlLowongan}+' Asisten'" readonly="true"/>
-			</div>
-
 	</div>
-	</div>
-	<div   th:replace = "fragments/fragment :: footer" ></div> 
 	
 	
 </body>

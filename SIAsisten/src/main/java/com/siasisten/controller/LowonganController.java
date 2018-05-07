@@ -98,6 +98,7 @@ public class LowonganController {
 	    	model.addAttribute("matkul", mk);
 	    	model.addAttribute("ruangan", rm);
 	    	System.out.println("id ruangan"+rm);
+	    	model.addAttribute("pageTitle", "View Lowongan");
 	    return "view";
     }
 	
