@@ -25,6 +25,7 @@
 							<th>Nama Mata Kuliah</th>
 			                <th>Status</th>
 			                <th>Jumlah Lowongan</th>
+			                <th class="no-sort">Action</th>
 			            </tr>
 			        </thead>
 			        
@@ -35,13 +36,18 @@
 							<td th:text="' ' + ${allLowongans.namaMatkul}"></td>
 							<td th:text= "' ' + ${allLowongans.isOpen ==1} ? 'Buka':'Tutup'"></td>
 							<td th:text="' ' + ${allLowongans.jmlLowongan}"></td>
+							<td><a th:href="'/lowongan/view/' + ${allLowongans.id}">Lihat Detail</a></td>
 		                </tr>
 		            </tbody>
 		    		</table>
 	<script>
 	    		$(document).ready( function () {
 	    			$('#lowonganTable').DataTable({
-			        "info":     false
+			        "info":     false,
+			        "columnDefs": [ {
+			            "targets": 'no-sort',
+			            "orderable": false,
+			      } ]
 			    	});
 			} );	
 	</script>
