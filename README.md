@@ -4,7 +4,26 @@ Dalam melaksanakan aktivitasnya sebagai institusi pendidikan, Fakultas Ilmu Komp
 
 Untuk mendukung penerimaan asisten dosen Fakultas Ilmu komputer, dibutuhkan Sistem Informasi Asisten (SIAsisten). Dengan SIAsisten, diharapkan dosen dapat dimudahkan dalam mencari asisten dosen dan juga memudahkan mahasiswa yang ingin mendaftar menjadi asisten dosen.
 
-Aplikasi ini, dikembangkan oleh Kelompok TA A yang beranggotakan:
+# Base URL:
+[`http://kelompok-a.herokuapp.com/`](http://kelompok-a.herokuapp.com/)
+
+# API List:
+- [asisten-dosen/cek-status?id=[id_mahasiswa]](#asisten-dosencek-statusidid_mahasiswa)
+
+## asisten-dosen/cek-status?id=[id_mahasiswa]
+Mengembalikan status asisten dosen dari seorang mahasiswa dalam bentuk boolean dengan menggunakan ID mahasiswa
+
+**URL** : `/asisten-dosen/cek-status?id=[id_mahasiswa]`
+
+**Method** : `GET`
+
+### Response
+**Contoh Request**: [/asisten-dosen/cek-status?id=1](http://kelompok-a.herokuapp.com/asisten-dosen/cek-status?id=1)
+```json
+false
+```
+
+# Tim Pengembang:
 1. 1606954703 - [Aisyah Sadiyah](https://github.com/aisyahsdyh)
 2. 1606954735 - [Arri Kurniawan](https://github.com/arrikurniawan)
 3. 1606954792 - [Fadly Muhammad Ridho](https://github.com/fadlymridho)
