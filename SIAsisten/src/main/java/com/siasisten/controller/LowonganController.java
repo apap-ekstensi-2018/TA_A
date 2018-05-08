@@ -158,6 +158,7 @@ public class LowonganController {
 			allLowonganDTO.add(lDto);
 		}
 		model.addAttribute("allLowonganDTO", allLowonganDTO);
+		model.addAttribute("pageTitle", "View All Lowongan");
 	    return "viewall";
     }
 }

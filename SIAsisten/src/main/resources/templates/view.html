@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="fragments/fragment-new :: assets" />
+	<title th:text="${pageTitle}"></title>
 	<body>
 	<aside id="left-panel" class="left-panel">
         		<div th:replace = "fragments/fragment-new :: left-panel"></div>

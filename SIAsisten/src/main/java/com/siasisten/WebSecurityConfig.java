@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/", "/css/**", "/js/**", "/images/**", "/lowongan/**").permitAll()
+		.antMatchers("/", "/css/**", "/js/**", "/images/**", "/lowongan/**", "/asisten-dosen/**").permitAll()
 //		.antMatchers("/lowongan/**").hasAnyRole("mahasiswa", "dosen", "pegawai")
 		.anyRequest().fullyAuthenticated()
 		.and()
