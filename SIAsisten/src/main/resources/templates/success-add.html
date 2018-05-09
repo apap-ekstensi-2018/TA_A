@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/fragment :: assets" />
-<body>
-	<div th:replace="fragments/fragment :: header"></div>
-	<div><a>Data Berhasil Ditambahkan</a></div>
-	<div th:replace="fragments/fragment :: footer"></div>
-</body>
+	<head>
+		<title>Success Add</title>
+		<head th:replace="fragments/fragment-new :: assets" />
+	</head>
+	<body>
+		<aside id="left-panel" class="left-panel">
+    		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+				<div class="container">
+					<h2>Data berhasil ditambahkan</h2>
+				</div>
+		</div>
+	</body>
 </html>

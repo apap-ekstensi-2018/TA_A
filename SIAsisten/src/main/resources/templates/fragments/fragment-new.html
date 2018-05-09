@@ -90,7 +90,6 @@
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
                     <div class="header-left">
                         <H1 th:text="${pageTitle}"></H1>
-                        
                     </div>
                 </div>
 
@@ -101,7 +100,6 @@
                             <div th:unless="${#httpServletRequest.remoteUser} == null">
                             	<form th:action="@{/logout}" method="post">
                             	<b th:text=" 'Login As ' + ${#httpServletRequest.remoteUser}" class="text-black" style="margin-top:10px; margin-right:10px;"></b>
-                            	
                             	<input type="submit" class="btn btn-xs btn-danger" value="Sign Out" />
                             	</form>
                            	</div>

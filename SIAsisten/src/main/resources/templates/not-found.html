@@ -5,13 +5,15 @@
 		<head th:replace="fragments/fragment-new :: assets" />
 	</head>
 	<body>
-		<div th:replace="fragments/fragment-new :: header"></div>
-			<div class="content-wrapper">
-				<div class="container-fluid">
+		<aside id="left-panel" class="left-panel">
+    		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+				<div class="container">
 					<h2>Not Found</h2>
 					<h5 th:text="'Id ' + ${idlowongan} + ' tidak ditemukan'"></h5>
 				</div>
-			</div>
-		<div th:replace="fragments/fragment-new :: footer"></div>
+		</div>
 	</body>
 </html>
