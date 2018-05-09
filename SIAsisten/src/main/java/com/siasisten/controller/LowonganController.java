@@ -60,6 +60,7 @@ public class LowonganController {
 	{
 		List<MatkulModel> matkul = matkulDao.selectAllMatkul();
 		model.addAttribute("matkul", matkul);
+		model.addAttribute("pageTitle", "Tambah Lowongan");
 		if(lowongan.getIdMatkul()==0) {
 			return "form-addLowongan";
 		}
@@ -111,6 +112,7 @@ public class LowonganController {
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
+		model.addAttribute("pageTitle", "Ubah Lowongan");
 		idLowongan = id_lowongan;
 	    id_matkul = matkul.getId();
 		return "ubah-lowongan";
@@ -127,7 +129,7 @@ public class LowonganController {
 		return "success-update";
 	}
 	
-	@RequestMapping("/lowongan/delete/{id_lowongan}")
+	@RequestMapping("/lowongan/hapus/{id_lowongan}")
     public String deleteLowongan (Model model, @PathVariable(value = "id_lowongan", required = false) int idlowongan)
     {
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(idlowongan);

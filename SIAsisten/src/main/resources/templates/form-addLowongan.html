@@ -1,46 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/fragment :: assets" />
-<body>
-	<div th:replace="fragments/fragment :: header"></div>
-	<div class="container">
-		<div>
-			<h3>Tambah Lowongan</h3>
+	<head th:replace="fragments/fragment-new :: assets" />
+	<body>
+		<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<div class="container">
+				<form id="myForm" action="/lowongan/tambah" method="post">
+					<div class="form-row">
+						<div class="form-group col-md-4">
+							<label for="">Mata Kuliah</label>
+						</div>
+						<div class="form-group col-md-6">
+							<select name="idMatkul" class="form-control">
+								<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
+								<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="">Status Lowongan</label>
+						</div>
+						<div class="form-group col-md-6">
+							<select name="isOpen" class="form-control">
+								<option>--Pilih Status--</option>	
+								<option value=1>Buka</option>
+								<option value=0>Tutup</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="jmlLowongan">Jumlah Lowongan</label>
+						</div>
+						<div class="form-group col-md-6">
+							<input type="text" class="form-control" id="jmlLowongan" name="jmlLowongan" required="required"/> 
+						</div>
+						<div class="form-group col-md-12 text-right">
+							<button onclick="myFunction()" type="button" name="action" class="btn btn-success">Simpan</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
-	<div class="container">
-		<form id="myForm" action="/lowongan/tambah" method="post">
-			<div>
-				<select name="idMatkul" class="form-control">
-					<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
-					<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
-				</select>
-			</div>
-			<div>
-				<select name="isOpen" class="form-control">
-					<option>--Pilih Status--</option>	
-					<option value=1>Buka</option>
-					<option value=0>Tutup</option>
-				</select>
-			</div>
-			<div>
-				<label for="jmlLowongan">Jumlah Lowongan :<input type="text" class="form-control" id="jmlLowongan" name="jmlLowongan" required="required"/> </label> 
-			</div>
-			<button onclick="myFunction()" type="button" name="action" class="btn btn-primary">Simpan</button>
-		</form>
-	</div>
-	<div th:replace="fragments/fragment :: footer"></div>
-</body> 
+		<script type="text/javascript">
+			function myFunction() {
+				var jmlSlot;
+				jmlSlot = document.getElementById("jmlLowongan").value;
+				if (jmlSlot == ""){
+					alert("Jumlah slot tidak boleh kosong!");
+				}
+				else {
+					document.forms["myForm"].submit();
+				}
+			}
+		</script>
+	</body> 
 </html>
-<script>
-	function myFunction() {
-		var jmlSlot;
-		jmlSlot = document.getElementById("jmlLowongan").value;
-		if (jmlSlot == ""){
-			alert("Jumlah slot tidak boleh kosong!");
-		}
-		else {
-			document.forms["myForm"].submit();
-		}
-	}
-</script>

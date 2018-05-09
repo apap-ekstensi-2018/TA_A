@@ -1,62 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="${pageTitle}"></title>
-        <!-- jQuery -->
-		<script src="/js/jquery-3.2.1.js"></script>
-		<!-- dataTables -->
-		<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<link href="/css/datatables.css" rel="stylesheet" type="text/css" />   
-		<script src="/js/datatables.js"></script>
-		<div th:replace = "fragments/fragment-new :: assets" ></div>		
-    </head>
-    
+    <head th:replace = "fragments/fragment-new :: assets" />
     <body>
         <aside id="left-panel" class="left-panel">
-        		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
 		</aside>
 		<div id="right-panel" class="right-panel">
-					<div th:replace = "fragments/fragment-new :: right-panel"></div>
-						
-						<div class="container">
-						        <table id="lowonganTable" class="display" style="margin-left='15px'">
-						        
-							       <thead class="thead-dark">
-							            <tr>
-							            	<th>No</th>
-							                <th>Id Lowongan</th>
-											<th>Nama Mata Kuliah</th>
-							                <th>Status</th>
-							                <th>Jumlah Lowongan</th>
-							            </tr>
-							        </thead>
-							        
-							        <tbody>
-						                <tr th:each="allLowongans,iterationStatus: ${allLowonganDTO}">
-						                	<td th:text="' ' + ${iterationStatus.count}"></td>
-											<td th:text="' ' + ${allLowongans.id}"></td>
-											<td th:text="' ' + ${allLowongans.namaMatkul}"></td>
-											<td th:text= "' ' + ${allLowongans.isOpen ==1} ? 'Buka':'Tutup'"></td>
-											<td th:text="' ' + ${allLowongans.jmlLowongan}"></td>
-											<td><a th:href="'/lowongan/view/' + ${allLowongans.id}">Lihat Detail</a></td>
-						                </tr>
-						            </tbody>
-						    		</table>
-						    </div>
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>	
+			<div class="container">
+		        <table id="lowonganTable" class="display" style="margin-left='15px'">    
+			       <thead class="thead-dark">
+			            <tr>
+			            	<th>No</th>
+			                <th>Id Lowongan</th>
+							<th>Nama Mata Kuliah</th>
+			                <th>Status</th>
+			                <th>Jumlah Lowongan</th>
+			                <th class="no-sort">Action</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+		                <tr th:each="allLowongans,iterationStatus: ${allLowonganDTO}">
+		                	<td th:text="' ' + ${iterationStatus.count}"></td>
+							<td th:text="' ' + ${allLowongans.id}"></td>
+							<td th:text="' ' + ${allLowongans.namaMatkul}"></td>
+							<td th:text= "' ' + ${allLowongans.isOpen ==1} ? 'Buka':'Tutup'"></td>
+							<td th:text="' ' + ${allLowongans.jmlLowongan}"></td>
+							<td><a th:href="'/lowongan/view/' + ${allLowongans.id}">Lihat Detail</a></td>
+		                </tr>
+		            </tbody>
+	    		</table>
+		    </div>
 		</div>
-	<script>
-	    		$(document).ready( function () {
-	    			$('#lowonganTable').DataTable({
-			        "info":     false,
-			        "columnDefs": [ {
+		<script type="text/javascript">
+		    $(document).ready( function () {
+	   			$('#lowonganTable').DataTable({
+			        "info": false,
+			        "columnDefs": [{
 			            "targets": 'no-sort',
 			            "orderable": false,
-			      } ]
-			    	});
-			} );	
-	</script>
-	
-	
-	
+		      		}]
+		 		});
+			});	
+		</script>	
     </body>
 </html>

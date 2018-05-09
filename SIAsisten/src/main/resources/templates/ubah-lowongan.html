@@ -1,53 +1,56 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>Ubah Lowongan</title>
-	<div th:replace="fragments/fragment :: assets"/>
-</head>
-<body>
-
-	<div th:replace="fragments/fragment :: header"></div>
-
-	<div class="content-wrapper">
-	
-		<div class="container">
-			<form class="w3-container w3-card-4" id="myForm" action="/lowongan/ubah/submit" method="post">
-				<h3>Ubah Lowongan</h3>
-					<div>
-						<h6>Mata Kuliah</h6>
-						<input class="w3-input w3-border w3-animate-input" type="text" style="width:30%" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/><br/><br/>
+	<head th:replace="fragments/fragment-new :: assets" />
+	<body>
+		<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<div class="container">
+				<form class="" id="myForm" action="/lowongan/ubah/submit" method="post">
+					<div class="form-row">
+						<div class="form-group col-md-4">
+							<label for="matakuliah">Mata Kuliah</label>
+						</div>
+						<div class="form-group col-md-6">
+							<input class="form-control" type="text" id="matakuliah" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="status">Status Lowongan</label>
+						</div>
+						<div class="form-group col-md-6">
+							<select class="form-control" name="status" id="status">
+								<option th:value="${is_open}" th:text="${is_open == true} ? 'Buka' : 'Tutup'" th:selected="true"></option>
+								<option value=1 th:if="${is_open != true}" th:inline="text">Buka</option>
+								<option value=0 th:if="${is_open != false}" th:inline="text">Tutup</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="jml_slot">Jumlah Slot</label>
+						</div>
+						<div class="form-group col-md-6">
+							<input class="form-control" type="text" id="jml_slot" name="jml_slot" th:value="${lowongan.jmlLowongan}"/><br/>
+						</div>
+						<div class="form-group col-md-12 text-right">
+							<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
+							<input onclick="#" type="button" class="btn btn-danger" value="Cancel" />
+						</div>
 					</div>
-					<div>
-						<h6>Status Lowongan</h6>
-						<select class="w3-select w3-border" type="text" style="width:30%" name="status">
-							<option th:value="${is_open}" th:text="${is_open == true} ? 'Buka' : 'Tutup'" th:selected="true"></option>
-							<option value=1 th:if="${is_open != true}" th:inline="text">Buka</option>
-							<option value=0 th:if="${is_open != false}" th:inline="text">Tutup</option>
-						</select>
-					</div><br/>
-					<div>
-						<h6>Jumlah Slot</h6>
-						<input class="w3-input w3-border w3-animate-input" type="text" style="width:30%" id="jml_slot" name="jml_slot" th:value="${lowongan.jmlLowongan}"/><br/>
-					</div>
-					<p></p>
-					<button onclick="myFunction()" type="button" class="btn btn-success">Save</button>
-			</form>
+				</form>
+			</div>
 		</div>
-	</div>
-
-	<div th:replace="fragments/fragment :: footer"></div>
-
-</body>
+		<script type="text/javascript">
+			function basicValidation() {
+				var jmlSlot;
+				jmlSlot = document.getElementById("jml_slot").value;
+				if (jmlSlot == ""){
+					alert("Jumlah slot tidak boleh kosong!");
+				}
+				else {
+					document.forms["myForm"].submit();
+				}
+			}
+		</script>
+	</body>
 </html>
-<script>
-	function myFunction() {
-		var jmlSlot;
-		jmlSlot = document.getElementById("jml_slot").value;
-		if (jmlSlot == ""){
-			alert("Jumlah slot tidak boleh kosong!");
-		}
-		else {
-			document.forms["myForm"].submit();
-		}
-	}
-</script>

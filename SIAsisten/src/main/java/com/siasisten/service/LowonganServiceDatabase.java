@@ -1,7 +1,6 @@
 package com.siasisten.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LowonganServiceDatabase implements LowonganService{
 	@Autowired
 	private LowonganMapper LowonganMapper;
-	private static List <LowonganModel> lowonganList = new ArrayList <LowonganModel>();
+	/*private static List <LowonganModel> lowonganList = new ArrayList <LowonganModel>();*/
 	
 	@Override
 	public LowonganModel selectLowongan(String id) {
