@@ -32,6 +32,8 @@
 						<div class="form-group col-md-6">
 							<input class="form-control" type="text" id="jml_slot" name="jml_slot" th:value="${lowongan.jmlLowongan}"/><br/>
 						</div>
+						<input type="hidden" th:value="${id_lowongan}" name="id_lowongan"></input>
+						<input type="hidden" th:value="${matkul.id}" name="id_matkul"></input>
 						<div class="form-group col-md-12 text-right">
 							<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
 							<input onclick="#" type="button" class="btn btn-danger" value="Cancel" />

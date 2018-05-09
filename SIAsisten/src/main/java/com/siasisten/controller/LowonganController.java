@@ -20,9 +20,6 @@ import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
 import com.siasisten.model.RuanganMatkulModel;
 import com.siasisten.service.LowonganService;
-
-import com.siasisten.service.MatkulService;
-
 import com.siasisten.service.RuanganMatkulService;
 
 
@@ -36,16 +33,7 @@ public class LowonganController {
 	MatkulDAO matkulDao;
 	
 	@Autowired
-
-	MatkulService matkulService;
-	
-	
-	@Autowired
 	RuanganMatkulService ruanganMatkulDAO;
-
-
-	private int idLowongan;
-	private int id_matkul;
 	
 	@RequestMapping("/lowongan")
     public String index (Model model)
@@ -108,20 +96,19 @@ public class LowonganController {
 	{
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(id_lowongan);
 		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
-		int is_open = lowongan.getIsOpen();
 		model.addAttribute("matkul", matkul);
-		model.addAttribute("is_open", is_open);
 		model.addAttribute("lowongan", lowongan);
 		model.addAttribute("pageTitle", "Ubah Lowongan");
-		idLowongan = id_lowongan;
-	    id_matkul = matkul.getId();
+		model.addAttribute("id_lowongan", id_lowongan);
 		return "ubah-lowongan";
 	}
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
 										   @RequestParam(value = "status", required = false) int statusFixed,
-										   @RequestParam(value = "jml_slot", required = false) int jml_slot) 
+										   @RequestParam(value = "jml_slot", required = false) int jml_slot,
+										   @RequestParam(value = "id_lowongan", required = false) int idLowongan,
+										   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
 	{
 		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, statusFixed, jml_slot);
 		lowonganDAO.updateLowongan(lowongan);
@@ -153,7 +140,7 @@ public class LowonganController {
 		for(LowonganModel lMod : allLowongan) {
 			LowonganModelDTO lDto = new LowonganModelDTO();
 			lDto.setId(lMod.getId());
-			MatkulModel mMod = matkulService.selectMatkulbyId(lMod.getIdMatkul());
+			MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
 			lDto.setNamaMatkul(mMod.getNamaMatkul());
 			lDto.setIsOpen(lMod.getIsOpen());
 			lDto.setJmlLowongan(lMod.getJmlLowongan());

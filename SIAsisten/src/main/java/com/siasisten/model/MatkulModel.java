@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 public class MatkulModel {
 	@JsonProperty("id")
 	private int id;
+	
 	@JsonProperty("kode_matkul")
 	private String kodeMatkul;
+	
 	@JsonProperty("nama_matkul")
 	private String namaMatkul;
 }

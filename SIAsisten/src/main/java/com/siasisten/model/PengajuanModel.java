@@ -11,5 +11,5 @@ public class PengajuanModel {
 	private int id;
 	private int idLowongan;
 	private String usernameMhs;
-	private boolean isAccepted;
+	private int isAccepted;
 }

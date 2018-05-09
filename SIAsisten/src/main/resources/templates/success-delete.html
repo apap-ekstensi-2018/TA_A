@@ -5,13 +5,15 @@
 		<head th:replace="fragments/fragment-new :: assets" />
 	</head>
 	<body>
-		<div th:replace="fragments/fragment-new :: header"></div>
-			<div class="content-wrapper">
-				<div class="container-fluid">
-					<h2>Sukses</h2>
-					<h5 th:text="${message}"></h5>
-				</div>
+		<aside id="left-panel" class="left-panel">
+    		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<div class="container">
+				<h2>Sukses</h2>
+				<h5 th:text="${message}"></h5>
 			</div>
-		<!-- <div th:replace="fragments/fragment-new :: footer"></div> -->
+		</div>
 	</body>
 </html>
