@@ -2,10 +2,14 @@ package com.siasisten.controller;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.siasisten.dao.DosenDAO;
 import com.siasisten.dao.MatkulDAO;
+import com.siasisten.model.DosenModel;
 import com.siasisten.model.LowonganModel;
 import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
@@ -34,6 +40,9 @@ public class LowonganController {
 	
 	@Autowired
 	RuanganMatkulService ruanganMatkulDAO;
+	
+	@Autowired
+	DosenDAO dosenDAO;
 	
 	@RequestMapping("/lowongan")
     public String index (Model model)
@@ -132,22 +141,60 @@ public class LowonganController {
     }
 	
 	@RequestMapping("/lowongan/viewall")
-    public String cariSemuaLowongan (Model model)
+    public String cariSemuaLowongan (Model model, Authentication auth)
     {
-		List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
-		List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
-		model.addAttribute("allLowongan", allLowongan);
-		for(LowonganModel lMod : allLowongan) {
-			LowonganModelDTO lDto = new LowonganModelDTO();
-			lDto.setId(lMod.getId());
-			MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
-			lDto.setNamaMatkul(mMod.getNamaMatkul());
-			lDto.setIsOpen(lMod.getIsOpen());
-			lDto.setJmlLowongan(lMod.getJmlLowongan());
-			allLowonganDTO.add(lDto);
-		}
-		model.addAttribute("allLowonganDTO", allLowonganDTO);
-		model.addAttribute("pageTitle", "View All Lowongan");
-	    return "viewall";
+			
+			String userId = auth.getName();
+			String listIdMatkul = "";
+			Collection<? extends GrantedAuthority> authorities
+		     = auth.getAuthorities();
+			List<String> roles = new ArrayList<String>();
+			for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		    }
+			
+			List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
+			
+			if (roles.contains("dosen"))
+			{
+				DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+				List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
+				listIdMatkul = matkulDosen.stream()
+						.map(p -> String.valueOf(p.getId()))
+						.collect(Collectors.joining(","));
+				
+				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowonganByDosen(listIdMatkul);
+				
+				model.addAttribute("allLowongan", allLowongan);
+				for(LowonganModel lMod : allLowongan) {
+					LowonganModelDTO lDto = new LowonganModelDTO();
+					lDto.setId(lMod.getId());
+					MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
+					lDto.setNamaMatkul(mMod.getNamaMatkul());
+					lDto.setIsOpen(lMod.getIsOpen());
+					lDto.setJmlLowongan(lMod.getJmlLowongan());
+					allLowonganDTO.add(lDto);
+				}
+			}
+			else
+			{
+				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
+				
+				model.addAttribute("allLowongan", allLowongan);
+				for(LowonganModel lMod : allLowongan) {
+					LowonganModelDTO lDto = new LowonganModelDTO();
+					lDto.setId(lMod.getId());
+					MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
+					lDto.setNamaMatkul(mMod.getNamaMatkul());
+					lDto.setIsOpen(lMod.getIsOpen());
+					lDto.setJmlLowongan(lMod.getJmlLowongan());
+					allLowonganDTO.add(lDto);
+				}
+			}
+			
+			model.addAttribute("listIdMatkul", listIdMatkul);
+			model.addAttribute("allLowonganDTO", allLowonganDTO);
+			model.addAttribute("pageTitle", "View All Lowongan");
+		    return "viewall";
     }
 }

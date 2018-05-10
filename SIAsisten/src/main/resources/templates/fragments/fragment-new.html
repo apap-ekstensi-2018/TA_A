@@ -43,12 +43,24 @@
 	          	</div>
 	          	<div id="main-menu" class="main-menu collapse navbar-collapse">
               		<ul class="nav navbar-nav">
-                  		<!-- <li class="active">
-                      		<a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
-	                  	</li> -->
+              			
+                            <li>
+                            <br/>
+                            <center><a th:href="@{/home}"><img class="user-avatar rounded-circle" src="/images/user.png" alt="...">
+                          	
+                            <i style="color: white;">Welcome,</i>
+ 
+                            <i><b style="color: white;"><b th:text=" '' + ${#httpServletRequest.remoteUser}"/></b></i></center></a>
+                          </li>
+                   		 <br />
+                    
+                  		<li class="active">
+                      		<a th:href="@{/home}"> <i class="menu-icon fa fa-home"></i>Home </a>
+	                  	</li>
+	                  	
 	                  	<!-- <h3 class="menu-title">SI ASISTEN</h3>/.menu-title -->
 	                  	<li class="menu-item-has-children dropdown">
-	                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Pengajuan Lowongan</a>
+	                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown" ><i class="menu-icon fa fa-laptop"></i>Pengajuan Lowongan</a>
 	                      	<ul class="sub-menu children dropdown-menu">
                           		<li><i class="fa fa-puzzle-piece"></i><a th:href="@{/home}">Pengajuan Lowongan</a></li>
 	                          	<li><i class="fa fa-id-badge"></i><a th:href="@{/home}">Lihat Pengajuan</a></li>                            
@@ -79,17 +91,46 @@
 	              	</div>
 	              	<div class="col-sm-5">                		
                   		<div th:unless="${#httpServletRequest.remoteUser} == null" class="user-area dropdown float-right">                          
-                       		<form th:action="@{/logout}" method="post">
-                       	 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                          		<b th:text=" 'Login As ' + ${#httpServletRequest.remoteUser}" class="text-black" style="margin-top:10px; margin-right:10px;"></b>
-		                          	<input type="submit" class="btn btn-xs btn-danger" value="Sign Out" />
-                          	  	</a>
-                        	</form>
-                  		</div>
+                       		<i class="fa fa-sign-out"></i><a href="#" data-toggle="modal" data-target="#logoutModal">logout</a>
+                       	</div>
 	              	</div>
+	              	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="smallmodalLabel">Log Out</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <p> Are you sure you want to log-off? <br /></p>
+                                <form th:action="@{/logout}" method="post">
+                
+					                <input id="logout" type="submit" class="btn btn-outline-danger" value="Sign Out" />
+						                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+					            </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+	              	
 	          	</div>
 	      	</header><!-- /header -->
-      		<!-- Header-->   
-      	</div>	    
+      		<!-- Header--> 
+      		
+      	</div>
+     <script>
+     		$(function(){
+			    $('#logout').click(function(){
+			        if(confirm('Are you sure to logout')) {
+			            return true;
+			        }
+			
+			        return false;
+			    });
+			});
+     </script> 		    
 	</body>
 </html>

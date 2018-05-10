@@ -4,7 +4,9 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import com.siasisten.model.LowonganModel;
 import com.siasisten.model.PengajuanModel;
 
 @Mapper
@@ -18,4 +20,10 @@ public interface PengajuanMapper {
 	
 	@Delete("DELETE FROM `pengajuan` WHERE id=#{id}")
 	void deletePengajuan(@Param("id")int id); 
+	
+	@Update("UPDATE `pengajuan` SET `is_accepted`=#{isAccepted} WHERE id=#{id}")
+	void updatePengajuan (PengajuanModel pengajuan);
+	
+	@Select("select count(*) from pengajuan")
+	int countPengajuan();
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
 	xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity3">
-	<head th:replace="fragments/fragment :: assets" />
+	<head th:replace="fragments/fragment-new :: assets" />
 	<style type="text/css">
 		body {
 		  padding-top: 40px;
@@ -43,27 +43,94 @@
 		  border-top-left-radius: 0;
 		  border-top-right-radius: 0;
 		}
+		.well{
+        background-color: #ffffff;
+    }
+    .smallthum{
+        width: 100%;
+        border: none;
+    }
+    .eyntk {
+        color: #fff;
+        text-align: center;
+        /*background-color: #343434;*/
+        font-family: Raleway, sans-serif;
+        text-transform: uppercase;
+        padding-top: 10em;
+        padding-bottom: 11em;
+    }
+
+    .eyntk-r1 {
+        color: #ee7062;
+        border-bottom: 3px dotted #5d5d5d;
+        font-size: 3em;
+        font-weight: 800;
+        line-height: 1.6em;
+        display: inline-block;
+    }
+
+    .eyntk-r2 {
+        color: #343434;
+        margin: 0;
+        font-size: 12em;
+        line-height: 1em;
+        font-weight: 100;
+    }
 	</style>
 	<body>
-		<div class="container">
-	 		<form class="form-signin" th:action="@{/login}" method="post">
-	 			<h1 class="form-signin-heading">Welcome to SIAsisten</h1>
-	 			<hr/>
-        		<h4 class="form-signin-heading">Please sign in</h4>
-        		<label for="username" class="sr-only">Username</label>
-        		<input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        		<label for="password" class="sr-only">Password</label>
-        		<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        		<div class="text-danger">
-	        		<div th:if="${param.error}" class="text-danger">
-						Invalid username and password.
+			
+					<div class="row" id="headsb">
+					<div class="col-sm-12">
+						<div class="eyntk angry-animate">
+							<h2 class="eyntk-r1">SISTEM INFORMASI ASISTEN</h2>
+							    <h2 class="eyntk-r2">SIASISTEN</h2>
+							     	<div th:if="${#httpServletRequest.remoteUser} == null">
+							            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal">
+                          					Login
+             							</button>
+							         </div>
+						</div>
 					</div>
-					<div th:if="${param.logout}" class="text-danger">
-						You have been logged out.
-					</div>
-				</div>
-				<input type="submit" value="Sign In" class="btn btn-lg btn-primary btn-block" />
-      		</form>
-		</div>
+		
+		
+      		 
+             <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="largeModalLabel">Silahkan Login</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+							 		<form class="form-signin" th:action="@{/login}" method="post">
+							 			<h1 class="form-signin-heading">Welcome to SIAsisten</h1>
+							 			<hr/>
+						        		<h4 class="form-signin-heading">Please sign in</h4>
+						        		<label for="username" class="sr-only">Username</label>
+						        		<input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+						        		<label for="password" class="sr-only">Password</label>
+						        		<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+						        		<div class="text-danger">
+							        		<div th:if="${param.error}" class="text-danger">
+												Invalid username and password.
+											</div>
+											<div th:if="${param.logout}" class="text-danger">
+												You have been logged out.
+											</div>
+										</div>
+										<input type="submit" value="Sign In" class="btn btn-lg btn-primary btn-block" />
+						      		</form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		
 	</body>
 </html>

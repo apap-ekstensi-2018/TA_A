@@ -10,12 +10,15 @@ public interface LowonganService {
 	LowonganModel selectLowonganbyID (int idlowongan);
 	
     List<LowonganModel> selectAllLowongan ();
+    
+    List<LowonganModel> selectAllLowonganByDosen (String listIdMatkul);
 
     void addLowongan (LowonganModel student);
 
     void deleteLowongan (int idlowongan);
     
     void updateLowongan (LowonganModel student);
+    int countLowongan ();
     
     int cekLowongan(int id_matkul);
 }

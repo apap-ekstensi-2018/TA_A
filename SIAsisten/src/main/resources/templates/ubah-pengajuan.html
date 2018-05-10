@@ -12,7 +12,8 @@
 		<div th:replace = "fragments/fragment-new :: right-panel"></div>
 			<br/>
 			<div class="container">		
-				<div class="row">			
+				<div class="row">
+				<form class="" id="myForm" action="/pengajuan/review/submit" method="post">			
 					<div class="form-group col-md-4">
 						<label for="mk">Lowongan</label> 
 					</div>
@@ -28,23 +29,25 @@
 					<div class="form-group col-md-4">
 						<label for="sl">Status Lowongan</label> 
 					</div>
+					
 					<div class="form-group col-md-6">
-						<td th:switch="${pengajuan.isAccepted}">
-						    <span th:case="0" th:text="Ditolak" /> 
-							<span th:case="1" th:text="Diterima" />
-							<span th:case="2" th:text="Dipending" />
-						</td>
-					</div>
+							
+							<select class="form-control" id="status_pengajuan" th:field="*{pengajuan.isAccepted}" th:value="${pengajuan.isAccepted}">
+							    <option value=0>Ditolak</option>
+							    <option value=1>Diterima</option>
+							    <option value=2>Pending</option>
+							    
+							</select>
+						</div>
 				</div>
-				<div class="form-group col-md-12 text-right">
-				<form id="myForm" th:action="@{/pengajuan/hapus/} + ${pengajuan.id}" method="post">
-					<input id="is_accepted" type="hidden" th:value="${pengajuan.isAccepted}"></input>
-					<button onclick="myFunction()" type="button" class="btn btn-danger">Delete</button>
-				</form>
-				
-				<a th:href="@{/pengajuan/review/} + ${pengajuan.id}"><input type="button" name="btnUpdate" class="btn btn-primary" value="Update" /></a>
+				<input type="hidden" th:value="${pengajuan.id}" name="id"></input>
+				<input type="hidden" th:value="${pengajuan.idLowongan}" name="idLowongan"></input>
+				<input type="hidden" th:value="${pengajuan.usernameMhs}" name="usernameMhs"></input>
+				<div class="form-group col-md-6">
+					<button class="btn btn-success" type="submit" name="action" value="Update">Save</button>
 				</div>
-			</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

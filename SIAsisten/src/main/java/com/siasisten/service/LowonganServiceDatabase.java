@@ -63,4 +63,16 @@ public class LowonganServiceDatabase implements LowonganService{
 	public int cekLowongan(int id_matkul) {
 		return LowonganMapper.cekLowongan( id_matkul);
 	}
+
+	@Override
+	public int countLowongan() {
+		// TODO Auto-generated method stub
+		return LowonganMapper.countLowongan();
+	}
+
+	@Override
+	public List<LowonganModel> selectAllLowonganByDosen(String listIdMatkul) {
+		log.info ("Select All Data Lowongan by Dosen");
+		return LowonganMapper.selectAllLowonganByDosen(listIdMatkul);
+	}
 }
