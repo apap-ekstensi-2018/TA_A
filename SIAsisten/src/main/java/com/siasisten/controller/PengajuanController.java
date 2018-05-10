@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,8 @@ import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MahasiswaModel;
 import com.siasisten.model.MatkulModel;
 import com.siasisten.model.PengajuanModel;
+import com.siasisten.model.PengajuanModelDTO;
+import com.siasisten.model.UserModel;
 import com.siasisten.service.LowonganService;
 import com.siasisten.service.MahasiswaService;
 import com.siasisten.service.PengajuanService;
@@ -129,4 +132,48 @@ public class PengajuanController {
 		return "form-addPengajuan";
 	}
 	
+	@RequestMapping("/pengajuan/viewall")
+	public String viewAllPengajuan(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userN = auth.getName();
+		/*UserModel um = userDAO.selectUser(userN);*/
+		//String UserRole = um.getRole();
+		//if (UserRole == "mahasiswa") {
+			List<PengajuanModelDTO> AllpengajuanDTO = new ArrayList<>();
+			List<PengajuanModel> Allpengajuan = pengajuanService.selectAllPengajuan();
+			model.addAttribute("Allpengajuan", Allpengajuan);
+			for (PengajuanModel peng : Allpengajuan) {
+				List<String> nmDosen = new ArrayList<String>();
+				PengajuanModelDTO pmd = new PengajuanModelDTO();
+				pmd.setId(peng.getIdLowongan());
+				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
+				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
+				pmd.setNamaMatkul(mMod.getNamaMatkul());
+				for(int i=0; i<mMod.getDosenList().size(); i++) {
+					nmDosen.add(mMod.getDosenList().get(i).getNama());
+				}
+				pmd.setNamaDosen(String.join(",", nmDosen));
+				System.out.println(lMod.getIsOpen());
+				pmd.setStatusLowongan(lMod.getIsOpen());
+				pmd.setJumlahLowongan(lMod.getJmlLowongan());
+				AllpengajuanDTO.add(pmd);
+			}
+			model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
+			return "viewall-pengajuan";
+		}
+//		else {
+//			PegawaiModel pMod = pegawaiDAO.selectPegawaibyNIP(userN);
+//			DosenModel dMod = dosenDAO.selectDosenbyId(pMod.getId());
+//			MatkulModel mm = matkulDAO.selectMatkulbyId(dMod.getId());
+//			model.addAttribute("mm",mm);
+//			for (MatkulModel mMod : mm) {
+//				
+//			}
+//		}
+//		return "viewall-pengajuanD";
+	
+	//KURANG ISOPEN SAMA ELSE UNTUK OTORISASI DOSEN
+	//thank YOU
+	//abis itu di commit ya mas :D
+	//}
 }

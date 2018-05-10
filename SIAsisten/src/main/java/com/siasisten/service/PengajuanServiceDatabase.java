@@ -1,5 +1,7 @@
 package com.siasisten.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +46,10 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	public int countPengajuan() {
 		// TODO Auto-generated method stub
 		return pengajuanMapper.countPengajuan();
-	} 
+	}
+
+	@Override
+	public List<PengajuanModel> selectAllPengajuan() {
+		return pengajuanMapper.selectAllPengajuan();
+	}
 }

@@ -1,5 +1,7 @@
 package com.siasisten.service;
 
+import java.util.List;
+
 import com.siasisten.model.LowonganModel;
 import com.siasisten.model.PengajuanModel;
 
@@ -10,4 +12,5 @@ public interface PengajuanService {
 	void deletePengajuan(int idlowongan);
 	void updatePengajuan (PengajuanModel pengajuan);
 	int countPengajuan();
+	List<PengajuanModel> selectAllPengajuan ();
 }
