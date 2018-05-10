@@ -8,6 +8,7 @@
 		<div id="right-panel" class="right-panel">
 			<div th:replace = "fragments/fragment-new :: right-panel"></div>
 			<div class="container">
+				<br><br><br>
 				<form class="" id="myForm" action="/lowongan/ubah/submit" method="post">
 					<div class="form-row">
 						<div class="form-group col-md-4">
@@ -36,7 +37,9 @@
 						<input type="hidden" th:value="${matkul.id}" name="id_matkul"></input>
 						<div class="form-group col-md-12 text-right">
 							<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
-							<input onclick="#" type="button" class="btn btn-danger" value="Cancel" />
+							<a th:href="'/lowongan/viewall'">
+									<button type="button" class="btn btn-danger">Cancel</button>
+							</a>
 						</div>
 					</div>
 				</form>
