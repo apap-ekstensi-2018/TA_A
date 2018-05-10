@@ -30,4 +30,10 @@ public interface LowonganMapper {
 		
 	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan")
 	List<LowonganModel> selectAllLowongan();
+	
+	@Select("select count(*) from lowongan")
+	int countLowongan();
+	
+	@Select("select id, id_matkul as idMatkul, is_open as isOpen, jml_lowongan as jmlLowongan FROM lowongan where id_matkul IN(#{listIdMatkul})")
+	List<LowonganModel> selectAllLowonganByDosen(@Param("listIdMatkul") String listIdMatkul);
 }

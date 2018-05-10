@@ -34,6 +34,7 @@ public class DosenDAOImpl implements DosenDAO {
 		return dosen;
 	}
 	
+	@Override
 	public List<DosenModel> selectAllDosen () {
 		DosenModel[] listDosen = restTemplate.getForObject(
 				"https://apap-fasilkom.herokuapp.com/api/dosen/viewall",

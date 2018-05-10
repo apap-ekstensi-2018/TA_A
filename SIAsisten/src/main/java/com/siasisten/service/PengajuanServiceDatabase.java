@@ -32,5 +32,17 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	public PengajuanModel selectPengajuanByIdLowongan(int idLowongan) {
 		// TODO Auto-generated method stub
 		return pengajuanMapper.selectPengajuanByIdLowongan(idLowongan);
+	}
+
+	@Override
+	public void updatePengajuan(PengajuanModel pengajuan) {
+		// TODO Auto-generated method stub
+		pengajuanMapper.updatePengajuan(pengajuan);
+	}
+
+	@Override
+	public int countPengajuan() {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.countPengajuan();
 	} 
 }
