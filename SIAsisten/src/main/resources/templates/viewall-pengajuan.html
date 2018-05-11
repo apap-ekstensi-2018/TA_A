@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>View All Students</title>
-        <!-- jQuery -->
-		<script src="/js/jquery-3.2.1.js"></script>
-		<!-- dataTables -->
-		<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<link href="/css/datatables.css" rel="stylesheet" type="text/css" />   
-		<script src="/js/datatables.js"></script>
-		<div th:replace = "fragments/fragment :: assets" ></div>		
-    </head>
+    <head th:replace = "fragments/fragment :: assets" />
     
     <body>
-    	<div th:replace = "fragments/fragment :: header" ></div>
-        
-		<h1 align="center">All Pengajuan Table</h1>
-		
-		        <table id="PengajuanTable" class="display">
-		        
+    	<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+	        <div class="container">			
+		        <table id="PengajuanTable" class="display">		        
 			       <thead class="thead-dark">
 			            <tr>
 			            	<th>No</th>
 			            	<th>Id Lowongan</th>
-			                <th>Nama Mata Kuliah</th>
+			                <th>Mata Kuliah</th>
 							<th>Dosen</th>
 			                <th>Status Lowongan</th>
+			                <th>Status Pengajuan</th>
 			                <th>Jumlah Lowongan</th>
+			                <th>Jumlah Pengajuan</th>
+			                <th>Jumlah Diterima</th>
 			            </tr>
-			        </thead>
-			        
+			        </thead>			        
 			        <tbody>
 		                <tr th:each="allPengajuans,iterationStatus: ${AllpengajuanDTO}">
 		                	<td th:text="' ' + ${iterationStatus.count}"></td>
 		                	<td th:text="' ' + ${allPengajuans.id}"></td>
+		                	<td th:text="' ' + ${allPengajuans.kodeMatkul} + ' ' + ${allPengajuans.namaMatkul} "></td>
 							<td th:text="' ' + ${allPengajuans.namaDosen}"></td>
-							<td th:text="' ' + ${allPengajuans.namaMatkul}"></td>
-							<td th:text= "' ' + ${allPengajuans.statusLowongan ==1} ? 'Buka':'Tutup'"></td>
+							<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>
+							<td th:text= "' ' + ${allPengajuans.statusPengajuan == 1} ? 'Diterima':'Ditolak'"></td>
 							<td th:text="' ' + ${allPengajuans.jumlahLowongan}"></td>
-		                </tr>
+							<td th:text="' ' + ${allPengajuans.jumlahPengajuan}"></td>
+							<td th:text="' ' + ${allPengajuans.jumlahDiterima}"></td>
+	                	</tr>
 		            </tbody>
-		    		</table>
+	    		</table>
+    		</div>
+		</div>
 	<script>
 	    		$(document).ready( function () {
 	    			$('#PengajuanTable').DataTable({

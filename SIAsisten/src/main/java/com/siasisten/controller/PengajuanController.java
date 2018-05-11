@@ -134,46 +134,62 @@ public class PengajuanController {
 	
 	@RequestMapping("/pengajuan/viewall")
 	public String viewAllPengajuan(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userN = auth.getName();
-		/*UserModel um = userDAO.selectUser(userN);*/
-		//String UserRole = um.getRole();
-		//if (UserRole == "mahasiswa") {
-			List<PengajuanModelDTO> AllpengajuanDTO = new ArrayList<>();
-			List<PengajuanModel> Allpengajuan = pengajuanService.selectAllPengajuan();
-			model.addAttribute("Allpengajuan", Allpengajuan);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
+		Collection<? extends GrantedAuthority> authorities
+	     = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+	        roles.add(a.getAuthority());
+	    }
+		
+		String userId = auth.getName();
+		String listIdMatkul = "";
+		int jmlPengajuan = 0;
+		int jmlDiterima = 0;
+		
+		List<PengajuanModelDTO> AllpengajuanDTO = new ArrayList<>();
+		List<PengajuanModel> Allpengajuan = new ArrayList<>();
+		
+		if (roles.contains("mahasiswa")) {
+			
+			Allpengajuan = pengajuanService.selectAllPengajuanMhs(userId);
+
 			for (PengajuanModel peng : Allpengajuan) {
 				List<String> nmDosen = new ArrayList<String>();
 				PengajuanModelDTO pmd = new PengajuanModelDTO();
-				pmd.setId(peng.getIdLowongan());
+				
 				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
 				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
-				pmd.setNamaMatkul(mMod.getNamaMatkul());
+				jmlPengajuan = pengajuanService.countPengajuanById(peng.getId());
+				jmlDiterima = pengajuanService.countDiterimaById(peng.getId());
+				
+				
 				for(int i=0; i<mMod.getDosenList().size(); i++) {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
 				}
+				
+				pmd.setId(peng.getIdLowongan());
+				pmd.setNamaMatkul(mMod.getNamaMatkul());
+				pmd.setKodeMatkul(mMod.getKodeMatkul());
 				pmd.setNamaDosen(String.join(",", nmDosen));
-				System.out.println(lMod.getIsOpen());
 				pmd.setStatusLowongan(lMod.getIsOpen());
+				pmd.setStatusPengajuan(peng.getIsAccepted());
 				pmd.setJumlahLowongan(lMod.getJmlLowongan());
+				pmd.setJumlahPengajuan(jmlPengajuan);
+				pmd.setJumlahDiterima(jmlDiterima);
+				
 				AllpengajuanDTO.add(pmd);
 			}
-			model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
-			return "viewall-pengajuan";
+			
+			
 		}
-//		else {
-//			PegawaiModel pMod = pegawaiDAO.selectPegawaibyNIP(userN);
-//			DosenModel dMod = dosenDAO.selectDosenbyId(pMod.getId());
-//			MatkulModel mm = matkulDAO.selectMatkulbyId(dMod.getId());
-//			model.addAttribute("mm",mm);
-//			for (MatkulModel mMod : mm) {
-//				
-//			}
-//		}
-//		return "viewall-pengajuanD";
-	
-	//KURANG ISOPEN SAMA ELSE UNTUK OTORISASI DOSEN
-	//thank YOU
-	//abis itu di commit ya mas :D
-	//}
+		else {
+
+		}
+		
+		model.addAttribute("Allpengajuan", Allpengajuan);
+		model.addAttribute("pageTitle", "Lihat Seluruh Pengajuan");
+		model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
+		return "viewall-pengajuan";
+	}
 }
