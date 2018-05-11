@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>View All Students</title>
-        <!-- jQuery -->
-		<script src="/js/jquery-3.2.1.js"></script>
-		<!-- dataTables -->
-		<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<link href="/css/datatables.css" rel="stylesheet" type="text/css" />   
-		<script src="/js/datatables.js"></script>
-		<div th:replace = "fragments/fragment :: assets" ></div>		
-    </head>
-    
+    <head th:replace = "fragments/fragment-new :: assets" />
     <body>
-    	<div th:replace = "fragments/fragment :: header" ></div>
-        
+    	<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+        <div class="container">
 		<h1 align="center">All Pengajuan Table</h1>
 		
 		        <table id="PengajuanTable" class="display">
@@ -40,6 +34,8 @@
 		                </tr>
 		            </tbody>
 		    		</table>
+		    		</div>
+		</div>
 	<script>
 	    		$(document).ready( function () {
 	    			$('#PengajuanTable').DataTable({
@@ -47,8 +43,6 @@
 			    	});
 			} );	
 	</script>
-	
-	<div th:replace = "fragments/fragment :: footer" ></div>
 	
     </body>
 </html>

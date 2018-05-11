@@ -1,13 +1,10 @@
 package com.siasisten.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +20,6 @@ import com.siasisten.model.MahasiswaModel;
 import com.siasisten.model.MatkulModel;
 import com.siasisten.model.PengajuanModel;
 import com.siasisten.model.PengajuanModelDTO;
-import com.siasisten.model.UserModel;
 import com.siasisten.service.LowonganService;
 import com.siasisten.service.MahasiswaService;
 import com.siasisten.service.PengajuanService;
@@ -134,8 +130,7 @@ public class PengajuanController {
 	
 	@RequestMapping("/pengajuan/viewall")
 	public String viewAllPengajuan(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userN = auth.getName();
+/*		Authentication auth = SecurityContextHolder.getContext().getAuthentication();*/
 		/*UserModel um = userDAO.selectUser(userN);*/
 		//String UserRole = um.getRole();
 		//if (UserRole == "mahasiswa") {

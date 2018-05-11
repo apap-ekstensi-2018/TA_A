@@ -2,7 +2,6 @@ package com.siasisten.service;
 
 import java.util.List;
 
-import com.siasisten.model.LowonganModel;
 import com.siasisten.model.PengajuanModel;
 
 

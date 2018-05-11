@@ -3,60 +3,55 @@
 	<head th:replace="fragments/fragment-new :: assets" />
 	
 	<body>
-		<aside id="left-panel" class="left-panel">
-        		<div th:replace = "fragments/fragment-new :: left-panel"></div>
+	<aside id="left-panel" class="left-panel">
+        <div th:replace = "fragments/fragment-new :: left-panel"></div>
 	</aside>
 	<div id="right-panel" class="right-panel">
-					<div th:replace = "fragments/fragment-new :: right-panel"></div>
-						<div class="col-sm-12 mb-4">
-                        <div class="card-group">
-                            <div class="card col-md-6 no-padding ">
-                                <div class="card-body">
-                                    <div class="h1 text-muted text-right mb-4">
-                                        <i class="fa fa-users"></i>
-                                    </div>
-
-                                    <div class="h4 mb-0">
-                                        <span class="count" th:text="${totalLowongan}"></span>
-                                    </div>
-
-                                    <small class="text-muted text-uppercase font-weight-bold">Lowongan</small>
-                                    <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 40%; height: 5px;"></div>
-                                </div>
+		<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<div class="col-sm-12 mb-4">
+            	<div class="card-group">
+                	<div class="card col-md-6 no-padding">
+                    	<div class="card-body">
+                            <div class="h1 text-muted text-right mb-4">
+                                <i class="fa fa-users"></i>
                             </div>
-                            <div class="card col-md-6 no-padding ">
-                                <div class="card-body">
-                                    <div class="h1 text-muted text-right mb-4">
-                                        <i class="fa fa-user-plus"></i>
-                                    </div>
-                                    <div class="h4 mb-0">
-                                        <span class="count" th:text="${totalPengajuan}"></span>
-                                    </div>
-                                    <small class="text-muted text-uppercase font-weight-bold">Pengajuan</small>
-                                    <div class="progress progress-xs mt-3 mb-0 bg-flat-color-2" style="width: 40%; height: 5px;"></div>
-                                </div>
+                            <div class="h4 mb-0">
+                                <span class="count" th:text="${totalLowongan}"></span>
                             </div>
-                            	
+                            <small class="text-muted text-uppercase font-weight-bold">Lowongan</small>
+                            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 40%; height: 5px;"></div>
                         </div>
-                    </div>
-						
-						<div class="row" style="margin-top:200px;margin-left: 20px" >
-						    <div class="col-sm-12" style="margin-left: -23px">
-						
-						        <div class="row text-center " >
-						            <div class="col-lg-6 portfolio-item angry-animate ">
-						                <a class="thumbnail" href="#dashboard.html"><img src="images/rekamlowongan.png" width="100%" alt=""></a>
-						            </div>
-						            <div class="col-lg-6 portfolio-item angry-animate ">
-						                <a class="thumbnail" th:href="@{/lowongan/viewall}"><img src="images/lihatlowongan.png" width="100%" alt=""> </a> 
-						            </div>
-						        </div>
-						        
-						    </div>
-						</div>
+                    </div>                            
+                    <div class="card col-md-6 no-padding">
+                        <div class="card-body">
+                            <div class="h1 text-muted text-right mb-4">
+                                <i class="fa fa-user-plus"></i>
+                            </div>
+                            <div class="h4 mb-0">
+                                <span class="count" th:text="${totalPengajuan}"></span>
+                            </div>
+                            <small class="text-muted text-uppercase font-weight-bold">Pengajuan</small>
+                            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-2" style="width: 40%; height: 5px;"></div>
+                        </div>
+                    </div>                            	
+                </div>
+            </div>
+			<div class="col-sm-12 mb-4">
+				<div class="card-group">
+					<div class="row">
+					    <div class="col-sm-12">						
+					        <div class="row text-center " >
+					            <div class="col-lg-6 portfolio-item angry-animate ">
+					                <a class="thumbnail" th:href="@{/lowongan/viewall}"><img src="images/lihatlowongan.png" width="100%" alt="" /> </a> 
+					            </div>						            
+					            <div class="col-lg-6 portfolio-item angry-animate ">
+					                <a class="thumbnail" th:href="@{/pengajuan/viewall}"><img src="images/rekamlowongan.png" width="100%" alt="" /></a>
+					            </div>						            
+					        </div>						        
+					    </div>
 					</div>
-	</div>
-		
-       
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
