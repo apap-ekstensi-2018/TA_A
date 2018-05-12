@@ -13,7 +13,6 @@
 				       <thead class="thead-dark">
 				            <tr>
 				            	<th>No</th>
-				            	<th>Id Lowongan</th>
 				                <th>Mata Kuliah</th>
 								<th>Dosen</th>
 				                <th>Status Lowongan</th>
@@ -21,19 +20,30 @@
 				                <th>Jumlah Lowongan</th>
 				                <th>Jumlah Pengajuan</th>
 				                <th>Jumlah Diterima</th>
+				                <th class="no-sort">Action</th>
 				            </tr>
 				        </thead>			        
 				        <tbody>
 			                <tr th:each="allPengajuans,iterationStatus: ${AllpengajuanDTO}">
 			                	<td th:text="' ' + ${iterationStatus.count}"></td>
-			                	<td th:text="' ' + ${allPengajuans.id}"></td>
-			                	<td th:text="' ' + ${allPengajuans.kodeMatkul} + ' ' + ${allPengajuans.namaMatkul} "></td>
+			                	<td>
+		                			<a th:if="${allPengajuans.statusPengajuan == 1}" th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}">
+		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                			</a>
+		                			<span th:unless="${allPengajuans.statusPengajuan == 1}" th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                		</td>
 								<td th:text="' ' + ${allPengajuans.namaDosen}"></td>
 								<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>
 								<td th:text= "' ' + ${allPengajuans.statusPengajuan == 1} ? 'Diterima' : (${allPengajuans.statusPengajuan == 0} ? 'Ditolak' : 'Pending')"></td>
 								<td th:text="' ' + ${allPengajuans.jumlahLowongan}"></td>
 								<td th:text="' ' + ${allPengajuans.jumlahPengajuan}"></td>
 								<td th:text="' ' + ${allPengajuans.jumlahDiterima}"></td>
+								<td>
+									<a th:if="${allPengajuans.statusPengajuan == 1}" th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}"></a>
+									<a th:unless="${allPengajuans.statusPengajuan == 1}" th:href="'/pengajuan/hapus/' + ${allPengajuans.id}"><input type="button" class="btn btn-danger" value="Batalkan Pengajuan" /></a>
+								</td>
 		                	</tr>
 			            </tbody>
 		    		</table>
@@ -49,13 +59,19 @@
 								<th>Nama Mahasiswa</th>
 				                <th>Status Lowongan</th>
 				                <th>Status Pengajuan</th>
-				                <th>Action</th>				                
+				                <th class="no-sort">Action</th>				                
 				            </tr>
 				        </thead>			        
 				        <tbody>
 			                <tr th:each="allPengajuans,iterationStatus: ${AllpengajuanDTO}">
 			                	<td th:text="' ' + ${iterationStatus.count}"></td>			                	
-			                	<td th:text="' ' + ${allPengajuans.kodeMatkul} + ' ' + ${allPengajuans.namaMatkul} "></td>
+			                	<!-- <td th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' + ${allPengajuans.namaMatkul} "></td> -->
+			                	<td>
+		                			<a th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}">
+		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                			</a>
+		                		</td>
 								<td th:text= "' ' + ${allPengajuans.npmMhs}"></td>
 								<td th:text= "' ' + ${allPengajuans.namaMhs}"></td>
 								<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PengajuanModelDTO {
 	private int id;
+	private int idLowongan;
+	private int idMatkul;
 	private String namaMatkul;
 	private String kodeMatkul;
 	private String nipDosen;

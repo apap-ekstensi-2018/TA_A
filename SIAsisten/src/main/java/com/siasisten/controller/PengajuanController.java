@@ -165,7 +165,9 @@ public class PengajuanController {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
 				}
 				
-				pmd.setId(peng.getIdLowongan());
+				pmd.setId(peng.getId());
+				pmd.setIdLowongan(peng.getIdLowongan());
+				pmd.setIdMatkul(lMod.getIdMatkul());
 				pmd.setNamaMatkul(mMod.getNamaMatkul());
 				pmd.setKodeMatkul(mMod.getKodeMatkul());
 				pmd.setNamaDosen(String.join(",", nmDosen));
@@ -209,7 +211,9 @@ public class PengajuanController {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
 				}
 				
-				pmd.setId(peng.getIdLowongan());
+				pmd.setId(peng.getId());
+				pmd.setIdLowongan(peng.getIdLowongan());
+				pmd.setIdMatkul(lMod.getIdMatkul());
 				pmd.setNamaMatkul(mMod.getNamaMatkul());
 				pmd.setKodeMatkul(mMod.getKodeMatkul());
 				pmd.setNamaDosen(String.join(",", nmDosen));
