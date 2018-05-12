@@ -10,4 +10,6 @@ public interface PengajuanService {
 	void deletePengajuan(int idlowongan);
 	void updatePengajuan (PengajuanModel pengajuan);
 	int countPengajuan();
+	String cekPengajuan(String username_mahasiswa);
+	void addPengajuan(PengajuanModel pengajuan);
 }

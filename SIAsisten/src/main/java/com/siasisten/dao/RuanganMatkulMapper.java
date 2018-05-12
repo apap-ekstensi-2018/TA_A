@@ -11,6 +11,6 @@ import com.siasisten.model.RuanganMatkulModel;
 
 @Mapper
 public interface RuanganMatkulMapper {
-	@Select("select id_ruangan as idRuangan, id_matkul as idMatkul FROM `ruangan_matkul` where id_matkul = #{idMatkul}")
+	@Select("select id_ruangan as idRuangan  FROM `ruangan_matkul` where id_matkul = #{idMatkul}")
 	List<RuanganMatkulModel> selectRuanganbyIdMatkul (@Param("idMatkul") int idMatkul);
 }

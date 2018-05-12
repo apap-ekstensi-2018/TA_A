@@ -46,11 +46,10 @@
               			
                             <li>
                             <br/>
-                            <center><a th:href="@{/home}"><img class="user-avatar rounded-circle" src="/images/user.png" alt="...">
-                          	
-                            <i style="color: white;">Welcome,</i>
- 
-                            <i><b style="color: white;"><b th:text=" '' + ${#httpServletRequest.remoteUser}"/></b></i></center></a>
+                            <center><a th:href="@{/home}"><img class="user-avatar rounded-circle" src="/images/user.png" alt="..."></center></a>
+                    
+                            
+                            <center><a><i><b style="color: red;"><b th:text=" '' + ${role}"/></b></i></a></center>
                           </li>
                    		 <br />
                     
@@ -90,7 +89,8 @@
 	                  	</div>
 	              	</div>
 	              	<div class="col-sm-5">                		
-                  		<div th:unless="${#httpServletRequest.remoteUser} == null" class="user-area dropdown float-right">                          
+                  		<div th:unless="${#httpServletRequest.remoteUser} == null" class="user-area dropdown float-right">
+                  			<b style="black: white;"><b th:text=" ' ' + ${namaUser}"/></b>                          
                        		<i class="fa fa-sign-out"></i><a href="#" data-toggle="modal" data-target="#logoutModal">logout</a>
                        	</div>
 	              	</div>
