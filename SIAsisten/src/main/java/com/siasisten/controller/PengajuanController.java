@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.DosenDAO;
@@ -266,8 +267,8 @@ public class PengajuanController {
 				
 				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
 				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
-				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getId());
-				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getId());
+				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getIdLowongan());
+				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getIdLowongan());
 				
 				for(int i=0; i<mMod.getDosenList().size(); i++) {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
@@ -312,8 +313,8 @@ public class PengajuanController {
 				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
 				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
 				MahasiswaModel mhs = mhsDAO.selectMahasiswabyNPM(peng.getUsernameMhs());
-				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getId());
-				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getId());
+				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getIdLowongan());
+				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getIdLowongan());
 				
 				for(int i=0; i<mMod.getDosenList().size(); i++) {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
@@ -343,5 +344,21 @@ public class PengajuanController {
 		model.addAttribute("pageTitle", "Lihat Seluruh Pengajuan");
 		model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
 		return "viewall-pengajuan";
+	}
+	
+	@RequestMapping(value="/mata-kuliah/{idMatkul}", method = RequestMethod.GET)
+	public String viewAllAsisten(Model model, 
+			@PathVariable("idMatkul") String idMatkul) {
+		MatkulModel mMod = matkulDAO.selectMatkulbyId(Integer.parseInt(idMatkul));
+		List<String> listNPM = pengajuanDAO.selectPengajuanByIdMatkul(Integer.parseInt(idMatkul));
+		List<MahasiswaModel> listMhs = new ArrayList<>();
+		for (String npm : listNPM) {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(npm);
+			listMhs.add(mahasiswa);
+		}
+		model.addAttribute("matkul", mMod);
+		model.addAttribute("mahasiswa", listMhs);
+		model.addAttribute("pageTitle", "Lihat Seluruh Asisten");
+		return "viewall-asisten";
 	}
 }

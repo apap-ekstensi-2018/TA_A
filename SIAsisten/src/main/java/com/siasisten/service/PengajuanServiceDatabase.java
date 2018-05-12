@@ -94,4 +94,10 @@ public class PengajuanServiceDatabase implements PengajuanService{
 		// TODO Auto-generated method stub
 		pengajuanMapper.addPengajuan(pengajuan);
 	}
+
+	@Override
+	public List<String> selectPengajuanByIdMatkul(int idMatkul) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllAsistenByIdLowongan(idMatkul);
+	}
 }
