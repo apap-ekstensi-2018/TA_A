@@ -13,7 +13,10 @@ import com.siasisten.model.PengajuanModel;
 @Mapper
 public interface PengajuanMapper {
 	@Select("Select id_lowongan as idLowongan, username_mahasiswa as usernameMhs,is_accepted as isAccepted from pengajuan")
-	List<PengajuanModel> selectAllPengajuan ();
+	List<PengajuanModel> selectAllPengajuan();
+	
+	@Select("Select id as id, id_lowongan as idLowongan, username_mahasiswa as usernameMhs, is_accepted as isAccepted from pengajuan where username_mahasiswa = #{usernameMhs}")
+	List<PengajuanModel> selectAllPengajuanMhs(@Param("usernameMhs") String usernameMhs);
 	
 	@Select("SELECT id AS id, id_lowongan AS idLowongan, username_mahasiswa AS usernameMhs, is_accepted AS isAccepted FROM `pengajuan` WHERE id = #{id}")
 	PengajuanModel selectPengajuanById(@Param("id") int id);
@@ -29,4 +32,10 @@ public interface PengajuanMapper {
 	
 	@Select("select count(*) from pengajuan")
 	int countPengajuan();
+	
+	@Select("select count(id) from pengajuan where id_lowongan = #{id}")
+	int countPengajuanById(@Param("id")int id);
+	
+	@Select("select count(id) from pengajuan where is_accepted = 1 and id = #{id}")
+	int countDiterimaById(@Param("id")int id);
 }

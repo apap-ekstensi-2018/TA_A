@@ -52,4 +52,22 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	public List<PengajuanModel> selectAllPengajuan() {
 		return pengajuanMapper.selectAllPengajuan();
 	}
+
+	@Override
+	public List<PengajuanModel> selectAllPengajuanMhs(String usernameMhs) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllPengajuanMhs(usernameMhs);
+	}
+
+	@Override
+	public int countPengajuanById(int id) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.countPengajuanById(id);
+	}
+
+	@Override
+	public int countDiterimaById(int id) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.countDiterimaById(id);
+	}
 }
