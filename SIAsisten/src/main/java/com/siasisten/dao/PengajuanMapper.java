@@ -18,6 +18,9 @@ public interface PengajuanMapper {
 	@Select("Select id as id, id_lowongan as idLowongan, username_mahasiswa as usernameMhs, is_accepted as isAccepted from pengajuan where username_mahasiswa = #{usernameMhs}")
 	List<PengajuanModel> selectAllPengajuanMhs(@Param("usernameMhs") String usernameMhs);
 	
+	@Select("Select id as id, id_lowongan as idLowongan, username_mahasiswa as usernameMhs, is_accepted as isAccepted from pengajuan where id_lowongan = #{listIdLowongan}")
+	List<PengajuanModel> selectAllPengajuanDosen(@Param("listIdLowongan") String listIdLowongan);
+	
 	@Select("SELECT id AS id, id_lowongan AS idLowongan, username_mahasiswa AS usernameMhs, is_accepted AS isAccepted FROM `pengajuan` WHERE id = #{id}")
 	PengajuanModel selectPengajuanById(@Param("id") int id);
 	
@@ -38,4 +41,7 @@ public interface PengajuanMapper {
 	
 	@Select("select count(id) from pengajuan where is_accepted = 1 and id = #{id}")
 	int countDiterimaById(@Param("id")int id);
+	
+	@Select("SELECT CASE WHEN COUNT(id) > 0 THEN 1 ELSE 0 END AS 'isRegister' FROM `pengajuan` WHERE username_mahasiswa = #{username} AND id_lowongan = #{idLowongan}")
+    int isRegister(@Param("username") String username, @Param("idLowongan") int idLowongan);
 }

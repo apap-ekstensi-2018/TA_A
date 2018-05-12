@@ -12,6 +12,8 @@ public interface PengajuanService {
 	int countPengajuan();
 	int countPengajuanById(int id);
 	int countDiterimaById(int id);
+	int isRegister (String username, int idLowongan);
 	List<PengajuanModel> selectAllPengajuan();
 	List<PengajuanModel> selectAllPengajuanMhs(String usernameMhs);
+	List<PengajuanModel> selectAllPengajuanDosen(String listLowongan);
 }

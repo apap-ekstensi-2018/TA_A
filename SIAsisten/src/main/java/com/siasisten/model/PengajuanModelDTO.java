@@ -11,7 +11,10 @@ public class PengajuanModelDTO {
 	private int id;
 	private String namaMatkul;
 	private String kodeMatkul;
+	private String nipDosen;
 	private String namaDosen;
+	private String namaMhs;
+	private String npmMhs;
 	private int statusLowongan;
 	private int statusPengajuan;
 	private int jumlahLowongan;

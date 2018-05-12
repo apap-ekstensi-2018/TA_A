@@ -70,4 +70,16 @@ public class PengajuanServiceDatabase implements PengajuanService{
 		// TODO Auto-generated method stub
 		return pengajuanMapper.countDiterimaById(id);
 	}
+
+	@Override
+	public List<PengajuanModel> selectAllPengajuanDosen(String listIdLowongan) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllPengajuanDosen(listIdLowongan);
+	}
+
+	@Override
+	public int isRegister(String username, int idLowongan) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.isRegister(username, idLowongan);
+	}
 }

@@ -24,8 +24,10 @@ import com.siasisten.model.DosenModel;
 import com.siasisten.model.LowonganModel;
 import com.siasisten.model.LowonganModelDTO;
 import com.siasisten.model.MatkulModel;
+import com.siasisten.model.PengajuanModel;
 import com.siasisten.model.RuanganMatkulModel;
 import com.siasisten.service.LowonganService;
+import com.siasisten.service.PengajuanService;
 import com.siasisten.service.RuanganMatkulService;
 
 
@@ -43,6 +45,9 @@ public class LowonganController {
 	
 	@Autowired
 	DosenDAO dosenDAO;
+	
+	@Autowired
+	PengajuanService pengajuanDAO;
 	
 	@RequestMapping("/lowongan")
     public String index (Model model)
@@ -155,7 +160,7 @@ public class LowonganController {
 			
 			List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
 			
-			if (roles.contains("dosen"))
+			if (roles.contains("ROLE_dosen"))
 			{
 				DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
 				List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
@@ -176,7 +181,7 @@ public class LowonganController {
 					allLowonganDTO.add(lDto);
 				}
 			}
-			else
+			else if (roles.contains("ROLE_mahasiswa"))
 			{
 				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
 				
@@ -185,9 +190,11 @@ public class LowonganController {
 					LowonganModelDTO lDto = new LowonganModelDTO();
 					lDto.setId(lMod.getId());
 					MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
+					int isRegister = pengajuanDAO.isRegister(userId, lMod.getId());
 					lDto.setNamaMatkul(mMod.getNamaMatkul());
 					lDto.setIsOpen(lMod.getIsOpen());
 					lDto.setJmlLowongan(lMod.getJmlLowongan());
+					lDto.setIsRegister(isRegister);
 					allLowonganDTO.add(lDto);
 				}
 			}
