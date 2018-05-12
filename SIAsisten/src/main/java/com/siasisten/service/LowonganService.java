@@ -18,6 +18,7 @@ public interface LowonganService {
     void deleteLowongan (int idlowongan);
     
     void updateLowongan (LowonganModel student);
+    
     int countLowongan ();
     
     int cekLowongan(int id_matkul);

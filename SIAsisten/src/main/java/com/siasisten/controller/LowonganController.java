@@ -4,12 +4,12 @@ package com.siasisten.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +30,7 @@ import com.siasisten.model.MatkulModel;
 import com.siasisten.model.RuanganMatkulModel;
 import com.siasisten.model.RuanganModel;
 import com.siasisten.service.LowonganService;
+import com.siasisten.service.PengajuanService;
 import com.siasisten.service.RuanganMatkulService;
 
 
@@ -50,6 +51,9 @@ public class LowonganController {
 	
 	@Autowired
 	DosenDAO dosenDAO;
+	
+	@Autowired
+	PengajuanService pengajuanDAO;
 	
 	@Autowired
 	MahasiswaDAO mahasiswaDAO;
@@ -149,7 +153,6 @@ public class LowonganController {
 		List<RuanganMatkulModel> rm = ruanganMatkulDAO.selectRuanganbyIdMatkul(mk.getId());
 		//String idR = String.valueOf(rm.get(0));
 		List<RuanganModel> ruLowongan = new ArrayList<>();
-		List<RuanganModel> ruangLowongan = new ArrayList<>();
 		for (RuanganMatkulModel ruang : rm) {
 			RuanganModel item = ruanganDao.selectRuanganbyId(ruang.getIdRuangan());
 			ruLowongan.add(item);
@@ -274,9 +277,9 @@ public class LowonganController {
     }
 	
 	@RequestMapping("/lowongan/viewall")
-    public String cariSemuaLowongan (Model model, Authentication auth)
+    public String cariSemuaLowongan (Model model)
     {
-			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String userId = auth.getName();
 			String listIdMatkul = "";
 			Collection<? extends GrantedAuthority> authorities
@@ -287,10 +290,12 @@ public class LowonganController {
 		    }
 			
 			List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
+
 			String roleUser = roles.get(0);
 			System.out.println(roleUser);
 			System.out.println(roleUser.substring(5, 10));
 			model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+
 			if (roles.contains("ROLE_dosen"))
 			{
 				DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -313,7 +318,7 @@ public class LowonganController {
 					allLowonganDTO.add(lDto);
 				}
 			}
-			else
+			else if (roles.contains("ROLE_mahasiswa"))
 			{
 				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
 				
@@ -325,9 +330,11 @@ public class LowonganController {
 					LowonganModelDTO lDto = new LowonganModelDTO();
 					lDto.setId(lMod.getId());
 					MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
+					int isRegister = pengajuanDAO.isRegister(userId, lMod.getId());
 					lDto.setNamaMatkul(mMod.getNamaMatkul());
 					lDto.setIsOpen(lMod.getIsOpen());
 					lDto.setJmlLowongan(lMod.getJmlLowongan());
+					lDto.setIsRegister(isRegister);
 					allLowonganDTO.add(lDto);
 				}
 			}

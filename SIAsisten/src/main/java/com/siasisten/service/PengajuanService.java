@@ -1,8 +1,8 @@
 package com.siasisten.service;
 
-import com.siasisten.model.LowonganModel;
-import com.siasisten.model.PengajuanModel;
+import java.util.List;
 
+import com.siasisten.model.PengajuanModel;
 
 public interface PengajuanService {
 	PengajuanModel selectPengajuanById(int id);
@@ -10,6 +10,12 @@ public interface PengajuanService {
 	void deletePengajuan(int idlowongan);
 	void updatePengajuan (PengajuanModel pengajuan);
 	int countPengajuan();
+	int countPengajuanById(int id);
+	int countDiterimaById(int id);
+	int isRegister (String username, int idLowongan);
+	List<PengajuanModel> selectAllPengajuan();
+	List<PengajuanModel> selectAllPengajuanMhs(String usernameMhs);
+	List<PengajuanModel> selectAllPengajuanDosen(String listLowongan);
 	String cekPengajuan(String username_mahasiswa);
 	void addPengajuan(PengajuanModel pengajuan);
 }

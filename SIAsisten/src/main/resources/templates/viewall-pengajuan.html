@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace = "fragments/fragment-new :: assets" />
+    <body>
+    	<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+	        <div class="container">
+		        <div th:if="${viewMode.equals('mahasiswa')}">			
+			        <table id="PengajuanTable" class="display">		        
+				       <thead class="thead-dark">
+				            <tr>
+				            	<th>No</th>
+				                <th>Mata Kuliah</th>
+								<th>Dosen</th>
+				                <th>Status Lowongan</th>
+				                <th>Status Pengajuan</th>
+				                <th>Jumlah Lowongan</th>
+				                <th>Jumlah Pengajuan</th>
+				                <th>Jumlah Diterima</th>
+				                <th class="no-sort">Action</th>
+				            </tr>
+				        </thead>			        
+				        <tbody>
+			                <tr th:each="allPengajuans,iterationStatus: ${AllpengajuanDTO}">
+			                	<td th:text="' ' + ${iterationStatus.count}"></td>
+			                	<td>
+		                			<a th:if="${allPengajuans.statusPengajuan == 1}" th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}">
+		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                			</a>
+		                			<span th:unless="${allPengajuans.statusPengajuan == 1}" th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                		</td>
+								<td th:text="' ' + ${allPengajuans.namaDosen}"></td>
+								<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>
+								<td th:text= "' ' + ${allPengajuans.statusPengajuan == 1} ? 'Diterima' : (${allPengajuans.statusPengajuan == 0} ? 'Ditolak' : 'Pending')"></td>
+								<td th:text="' ' + ${allPengajuans.jumlahLowongan}"></td>
+								<td th:text="' ' + ${allPengajuans.jumlahPengajuan}"></td>
+								<td th:text="' ' + ${allPengajuans.jumlahDiterima}"></td>
+								<td>
+									<a th:if="${allPengajuans.statusPengajuan == 1}" th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}"></a>
+									<a th:unless="${allPengajuans.statusPengajuan == 1}" th:href="'/pengajuan/hapus/' + ${allPengajuans.id}"><input type="button" class="btn btn-danger" value="Batalkan Pengajuan" /></a>
+								</td>
+		                	</tr>
+			            </tbody>
+		    		</table>
+		    	</div>
+		    	
+		    	<div th:if="${viewMode.equals('dosen')}">			
+			        <table id="PengajuanTable" class="display">		        
+				       <thead class="thead-dark">
+				            <tr>
+				            	<th>No</th>
+				                <th>Mata Kuliah</th>
+								<th>NPM</th>
+								<th>Nama Mahasiswa</th>
+				                <th>Status Lowongan</th>
+				                <th>Status Pengajuan</th>
+				                <th class="no-sort">Action</th>				                
+				            </tr>
+				        </thead>			        
+				        <tbody>
+			                <tr th:each="allPengajuans,iterationStatus: ${AllpengajuanDTO}">
+			                	<td th:text="' ' + ${iterationStatus.count}"></td>			                	
+			                	<!-- <td th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' + ${allPengajuans.namaMatkul} "></td> -->
+			                	<td>
+		                			<a th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}">
+		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
+			                				+ ${allPengajuans.namaMatkul}"></span>
+		                			</a>
+		                		</td>
+								<td th:text= "' ' + ${allPengajuans.npmMhs}"></td>
+								<td th:text= "' ' + ${allPengajuans.namaMhs}"></td>
+								<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>
+								<td th:text= "' ' + ${allPengajuans.statusPengajuan == 1} ? 'Diterima' : (${allPengajuans.statusPengajuan == 0} ? 'Ditolak' : 'Pending')"></td>
+								<td>
+									<a th:href="'/pengajuan/view/' + ${allPengajuans.id}"><input type="button" class="btn btn-primary" value="Lihat Detail" /></a>
+								</td>								
+		                	</tr>
+			            </tbody>
+		    		</table>
+		    	</div>
+    		</div>
+		</div>
+	<script>
+	    		$(document).ready( function () {
+	    			$('#PengajuanTable').DataTable({
+	    				"info": false,
+				        "columnDefs": [{
+				            "targets": 'no-sort',
+				            "orderable": false,
+			      		}]
+			    	});
+			} );	
+	</script>
+	
+    </body>
+</html>

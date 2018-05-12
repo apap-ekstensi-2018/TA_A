@@ -22,5 +22,5 @@ public class LowonganModelDTO {
 	private int isOpen;
 	@NotNull @NumberFormat(style = Style.NUMBER) @Min(1)
 	private int jmlLowongan;
-	
+	private int isRegister;
 }

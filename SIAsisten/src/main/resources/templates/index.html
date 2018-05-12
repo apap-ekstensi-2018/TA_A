@@ -72,26 +72,17 @@
 		}
 		
 </style>
-<body>
-	
-		
-					<div class="row" id="headsb">
-					<div class="col-sm-12">
-						<div class="eyntk angry-animate">
-							<h2 class="eyntk-r1">SISTEM INFORMASI ASISTEN</h2>
-							    <h2 class="eyntk-r2">SIASISTEN</h2>
-							     	<div th:if="${#httpServletRequest.remoteUser} == null">
-							            <a href="/login" class="btn btn-warning">LOGIN</a>
-							         </div>
-						</div>
-					</div>
-		
-		
-			 
-	
-		
-
-		
-
-</body>
+	<body>	
+		<div id="headsb">
+			<div class="col-sm-12">
+				<div class="eyntk angry-animate">
+					<h2 class="eyntk-r1">SISTEM INFORMASI ASISTEN</h2>
+				    <h2 class="eyntk-r2">SIASISTEN</h2>
+			     	<div th:if="${#httpServletRequest.remoteUser} == null">
+			            <a href="/login" class="btn btn-warning">LOGIN</a>
+			         </div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

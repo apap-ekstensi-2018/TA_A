@@ -1,5 +1,7 @@
 package com.siasisten.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,41 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	}
 
 	@Override
+
+	public List<PengajuanModel> selectAllPengajuan() {
+		return pengajuanMapper.selectAllPengajuan();
+	}
+
+	@Override
+	public List<PengajuanModel> selectAllPengajuanMhs(String usernameMhs) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllPengajuanMhs(usernameMhs);
+	}
+
+	@Override
+	public int countPengajuanById(int id) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.countPengajuanById(id);
+	}
+
+	@Override
+	public int countDiterimaById(int id) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.countDiterimaById(id);
+	}
+
+	@Override
+	public List<PengajuanModel> selectAllPengajuanDosen(String listIdLowongan) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllPengajuanDosen(listIdLowongan);
+	}
+
+	@Override
+	public int isRegister(String username, int idLowongan) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.isRegister(username, idLowongan);
+	}
+
 	public String cekPengajuan(String username_mahasiswa) {
 		// TODO Auto-generated method stub
 		return pengajuanMapper.cekPengajuan(username_mahasiswa);
@@ -57,6 +94,4 @@ public class PengajuanServiceDatabase implements PengajuanService{
 		// TODO Auto-generated method stub
 		pengajuanMapper.addPengajuan(pengajuan);
 	}
-
-	
 }
