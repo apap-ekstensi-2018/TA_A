@@ -3,6 +3,7 @@ package com.siasisten.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -44,4 +45,10 @@ public interface PengajuanMapper {
 	
 	@Select("SELECT CASE WHEN COUNT(id) > 0 THEN 1 ELSE 0 END AS 'isRegister' FROM `pengajuan` WHERE username_mahasiswa = #{username} AND id_lowongan = #{idLowongan}")
     int isRegister(@Param("username") String username, @Param("idLowongan") int idLowongan);
+
+	@Select("select username_mahasiswa from pengajuan where username_mahasiswa=#{username_mahasiswa}")
+	String cekPengajuan(String username_mahasiswa);
+	
+	@Insert("Insert into pengajuan (id_lowongan,username_mahasiswa,is_accepted) values (#{idLowongan}, #{usernameMhs}, 2)")
+	void addPengajuan(PengajuanModel pengajuan);
 }

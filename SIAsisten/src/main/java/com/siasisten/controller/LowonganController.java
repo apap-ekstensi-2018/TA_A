@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.DosenDAO;
+import com.siasisten.dao.MahasiswaDAO;
 import com.siasisten.dao.MatkulDAO;
+import com.siasisten.dao.RuanganDAO;
 import com.siasisten.model.DosenModel;
 import com.siasisten.model.LowonganModel;
 import com.siasisten.model.LowonganModelDTO;
+import com.siasisten.model.MahasiswaModel;
 import com.siasisten.model.MatkulModel;
-import com.siasisten.model.PengajuanModel;
 import com.siasisten.model.RuanganMatkulModel;
+import com.siasisten.model.RuanganModel;
 import com.siasisten.service.LowonganService;
 import com.siasisten.service.PengajuanService;
 import com.siasisten.service.RuanganMatkulService;
@@ -41,6 +44,9 @@ public class LowonganController {
 	MatkulDAO matkulDao;
 	
 	@Autowired
+	RuanganDAO ruanganDao;
+	
+	@Autowired
 	RuanganMatkulService ruanganMatkulDAO;
 	
 	@Autowired
@@ -49,18 +55,48 @@ public class LowonganController {
 	@Autowired
 	PengajuanService pengajuanDAO;
 	
+	@Autowired
+	MahasiswaDAO mahasiswaDAO;
+	
 	@RequestMapping("/lowongan")
     public String index (Model model)
     {
     	model.addAttribute("pageTitle", "Lowongan");
-        return "index";
+        return "home";
     }
 	
 
 	@RequestMapping("/lowongan/tambah")
-	public String tambahLowongan(Model model, @ModelAttribute("lowongan") LowonganModel lowongan)
+	public String tambahLowongan(Model model, Authentication auth, @ModelAttribute("lowongan") LowonganModel lowongan)
 	{
-		List<MatkulModel> matkul = matkulDao.selectAllMatkul();
+		
+			
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
+		DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+		model.addAttribute("namaUser", dosen.getNama());
+		List<MatkulModel> matkul = dosen.getMataKuliahList();
+		
+		//List<MatkulModel> matkul = matkulDao.selectAllMatkul();
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("pageTitle", "Tambah Lowongan");
 		if(lowongan.getIdMatkul()==0) {
@@ -84,30 +120,81 @@ public class LowonganController {
 	}
 	
 	@RequestMapping("/lowongan/view/{idlowongan}")
-    public String cariLowongan (Model model,
+    public String cariLowongan (Model model, Authentication auth,
             @PathVariable(value = "idlowongan") int idlowongan)
     {
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
+		
 		LowonganModel lm = lowonganDAO.selectLowonganbyID(idlowongan);
 		MatkulModel mk = matkulDao.selectMatkulbyId(lm.getIdMatkul());
 
 		int isopen = lm.getIsOpen();
 
 		List<RuanganMatkulModel> rm = ruanganMatkulDAO.selectRuanganbyIdMatkul(mk.getId());
+		//String idR = String.valueOf(rm.get(0));
+		List<RuanganModel> ruLowongan = new ArrayList<>();
+		for (RuanganMatkulModel ruang : rm) {
+			RuanganModel item = ruanganDao.selectRuanganbyId(ruang.getIdRuangan());
+			ruLowongan.add(item);
+		}
 		
-
+		
+		
 		model.addAttribute("tittle", "Cari Lowongan");
 	    	model.addAttribute("lm", lm);
 	    	model.addAttribute("isopen",isopen);
 	    	model.addAttribute("matkul", mk);
-	    	model.addAttribute("ruangan", rm);
-	    	System.out.println("id ruangan"+rm);
+	    	model.addAttribute("ruangan", ruLowongan);
+	    	System.out.println("id ruangan"+ruLowongan);
 	    	model.addAttribute("pageTitle", "View Lowongan");
 	    return "view";
     }
 	
 	@RequestMapping("/lowongan/ubah/{id_lowongan}")
-	public String lowonganUbah (Model model, @PathVariable(value = "id_lowongan", required = false) int id_lowongan) 
+	public String lowonganUbah (Model model, Authentication auth, @PathVariable(value = "id_lowongan", required = false) int id_lowongan) 
 	{
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(id_lowongan);
 		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
 		model.addAttribute("matkul", matkul);
@@ -118,12 +205,34 @@ public class LowonganController {
 	}
 	
 	@PostMapping("/lowongan/ubah/submit")
-	public String ubahSubmit (Model model, @RequestParam(value = "matakuliah", required = false) String matakuliah,
+	public String ubahSubmit (Model model, Authentication auth, @RequestParam(value = "matakuliah", required = false) String matakuliah,
 										   @RequestParam(value = "status", required = false) int statusFixed,
 										   @RequestParam(value = "jml_slot", required = false) int jml_slot,
 										   @RequestParam(value = "id_lowongan", required = false) int idLowongan,
 										   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
 	{
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
 		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, statusFixed, jml_slot);
 		lowonganDAO.updateLowongan(lowongan);
 		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
@@ -131,8 +240,30 @@ public class LowonganController {
 	}
 	
 	@RequestMapping("/lowongan/hapus/{id_lowongan}")
-    public String deleteLowongan (Model model, @PathVariable(value = "id_lowongan", required = false) int idlowongan)
+    public String deleteLowongan (Model model, Authentication auth, @PathVariable(value = "id_lowongan", required = false) int idlowongan)
     {
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(idlowongan);
         if (lowongan != null) {
         	lowonganDAO.deleteLowongan(idlowongan);
@@ -159,10 +290,16 @@ public class LowonganController {
 		    }
 			
 			List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
-			
+
+			String roleUser = roles.get(0);
+			System.out.println(roleUser);
+			System.out.println(roleUser.substring(5, 10));
+			model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+
 			if (roles.contains("ROLE_dosen"))
 			{
 				DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+				model.addAttribute("namaUser", dosen.getNama());
 				List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
 				listIdMatkul = matkulDosen.stream()
 						.map(p -> String.valueOf(p.getId()))
@@ -186,6 +323,9 @@ public class LowonganController {
 				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
 				
 				model.addAttribute("allLowongan", allLowongan);
+				
+				MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+				model.addAttribute("namaUser", mahasiswa.getNama());
 				for(LowonganModel lMod : allLowongan) {
 					LowonganModelDTO lDto = new LowonganModelDTO();
 					lDto.setId(lMod.getId());

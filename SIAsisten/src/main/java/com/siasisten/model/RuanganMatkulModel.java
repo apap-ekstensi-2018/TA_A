@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class RuanganMatkulModel {
 	private int idRuangan;
 	private int idMatkul;
+	
+	
 }

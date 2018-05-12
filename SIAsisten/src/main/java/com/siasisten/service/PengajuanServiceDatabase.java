@@ -49,6 +49,7 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	}
 
 	@Override
+
 	public List<PengajuanModel> selectAllPengajuan() {
 		return pengajuanMapper.selectAllPengajuan();
 	}
@@ -81,5 +82,16 @@ public class PengajuanServiceDatabase implements PengajuanService{
 	public int isRegister(String username, int idLowongan) {
 		// TODO Auto-generated method stub
 		return pengajuanMapper.isRegister(username, idLowongan);
+	}
+
+	public String cekPengajuan(String username_mahasiswa) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.cekPengajuan(username_mahasiswa);
+	}
+
+	@Override
+	public void addPengajuan(PengajuanModel pengajuan) {
+		// TODO Auto-generated method stub
+		pengajuanMapper.addPengajuan(pengajuan);
 	}
 }
