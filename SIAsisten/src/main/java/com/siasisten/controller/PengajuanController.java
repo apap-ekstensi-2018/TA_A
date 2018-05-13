@@ -127,6 +127,35 @@ public class PengajuanController {
 		return "success-delete-pengajuan";
 	}
 	
+	/*Menghapus dari URL*/
+	@RequestMapping("/pengajuan/hapus/{id_lowongan}")
+	public String deletePengajuan(@PathVariable(value = "id_lowongan") int id_lowongan, Authentication auth, Model model) 
+	{	
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
+		pengajuanDAO.deletePengajuan(id_lowongan);
+		return "success-delete-pengajuan";
+	}
+	
 	@RequestMapping("/pengajuan/review/{id_pengajuan}")
 	public String pengajuanUbah (Model model, @PathVariable(value = "id_pengajuan", required = false) int id_pengajuan, Authentication auth) 
 	{	
@@ -230,8 +259,7 @@ public class PengajuanController {
 	}
 	
 	@RequestMapping("/pengajuan/tambah/submit")
-	public String tambahSubmit (Model model, Authentication auth, 
-			   @RequestParam(value = "idLowongan", required = false) int idLowongan)
+	public String tambahSubmit (Model model, Authentication auth, @RequestParam(value = "idLowongan", required = false) int idLowongan)
 			 
 	{	
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();

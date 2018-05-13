@@ -16,10 +16,13 @@ import lombok.NoArgsConstructor;
 public class LowonganModel {
 	@NotNull
 	private int id;
+	
 	@NotNull
 	private int idMatkul;
+	
 	@NotNull
 	private int isOpen;
+	
 	@NotNull @NumberFormat(style = Style.NUMBER) @Min(1)
 	private int jmlLowongan;
 	

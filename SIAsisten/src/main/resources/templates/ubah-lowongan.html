@@ -20,21 +20,17 @@
 											<label for="matakuliah">Mata Kuliah</label>
 										</div>
 										<div class="form-group col-md-6">
-											<input class="form-control" type="text" id="matakuliah" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/>
+											<input class="form-control" type="text" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="status">Status Lowongan</label>
 										</div>
 										<div class="form-group col-md-6">
-									
-											<select class="form-control" id="status" th:field="*{lowongan.isOpen}" th:value="${lowongan.isOpen}">
-																    <option value=0>Tutup</option>
-																    <option value=1>Buka</option>
-																   
-																    
+											<select class="form-control" name="isOpen">
+												<option th:value="${lowongan.isOpen}" th:text="${lowongan.isOpen == 1} ? 'Buka' : 'Tutup'" th:selected="true"></option>
+												<option value=0 th:if="${lowongan.isOpen != 0}" th:text="Tutup"></option>
+												<option value=1 th:if="${lowongan.isOpen != 1}" th:text="Buka"></option>
 											</select>
-											
-											
 										</div>
 										<div class="form-group col-md-4">
 											<label for="jml_slot">Jumlah Slot</label>
@@ -45,10 +41,10 @@
 										<input type="hidden" th:value="${id_lowongan}" name="id_lowongan"></input>
 										<input type="hidden" th:value="${matkul.id}" name="id_matkul"></input>
 										<div class="form-group col-md-12 text-right">
-											<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
-											<a th:href="'/lowongan/viewall'">
-													<button type="button" class="btn btn-danger">Cancel</button>
-											</a>
+										<input onclick="basicValidation()" type="button" class="btn btn-success" value="Save"/>
+										<a th:href="'/lowongan/viewall'">
+											<button type="submit" class="btn btn-danger">Cancel</button>
+										</a>
 										</div>
 									</div>
 								</form>

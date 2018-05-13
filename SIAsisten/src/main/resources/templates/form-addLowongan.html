@@ -21,7 +21,7 @@
 								</div>
 								<div class="form-group col-md-6">
 								
-									<select name="idMatkul" class="form-control">
+									<select name="idMatkul" id="idMatkul" class="form-control">
 										<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
 										<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
 									</select>
@@ -31,8 +31,8 @@
 									<label for="">Status Lowongan</label>
 								</div>
 								<div class="form-group col-md-6">
-									<select name="isOpen" class="form-control">
-										<option>--Pilih Status--</option>	
+									<select name="isOpen" id="isOpen" class="form-control">
+										<option th:selected="true" th:disabled="true" value="">--Pilih Status--</option>	
 										<option value=1>Buka</option>
 										<option value=0>Tutup</option>
 									</select>
@@ -56,10 +56,21 @@
 		</div>
 		<script type="text/javascript">
 			function myFunction() {
-				var jmlSlot;
+				var jmlSlot, status, matkul;
 				jmlSlot = document.getElementById("jmlLowongan").value;
+				status = document.getElementById("isOpen").value;
+				matkul = document.getElementById("idMatkul").value;
 				if (jmlSlot == ""){
 					alert("Jumlah slot tidak boleh kosong!");
+				}
+				else if (jmlSlot < 1){
+					alert("Jumlah lowongan tidak boleh kecil dari 1")
+				}
+				else if (status == ""){
+					alert("Status lowongan harus dipilih!")
+				}
+				else if (matkul == ""){
+					alert("Mata kuliah harus dipilih!")
 				}
 				else {
 					document.forms["myForm"].submit();
