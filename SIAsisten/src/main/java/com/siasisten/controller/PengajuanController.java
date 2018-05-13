@@ -427,6 +427,10 @@ public class PengajuanController {
 		String userId = auth.getName();
 		List<String> roles = getUserRoles(auth);
 		List<String> listMatkul = new ArrayList<>();
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		
 		if (roles.contains("ROLE_dosen")) {
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -435,9 +439,12 @@ public class PengajuanController {
 				int idMatkulDosen = matkul.getId();
 				listMatkul.add(Integer.toString(idMatkulDosen));
 			}
+			model.addAttribute("namaUser", dosen.getNama());
 		}
 		else if (roles.contains("ROLE_mahasiswa")) {
 			listMatkul = pengajuanDAO.selectAllMatkulAsistenByUsername(userId);
+			MahasiswaModel mahasiswaU = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswaU.getNama());
 		}
 		
 		if (listMatkul.contains(idMatkul)) {
@@ -448,10 +455,13 @@ public class PengajuanController {
 				MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(npm);
 				listMhs.add(mahasiswa);
 			}
+			
 			model.addAttribute("matkul", mMod);
 			model.addAttribute("mahasiswa", listMhs);
 			
+			
 			return "viewall-asisten";
+			
 		}
 		else {
 			return "/error/403";
