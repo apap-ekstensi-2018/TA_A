@@ -63,8 +63,7 @@ public class PageController {
 		
 		
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
+		
 		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		
 		String userId = auth.getName();
@@ -79,9 +78,11 @@ public class PageController {
 		
 		int jumlahLowongan = lowonganDAO.countLowongan();
 		int jumlahPengajuan = pengajuanDAO.countPengajuan();
+		
 		model.addAttribute("totalLowongan", jumlahLowongan);
 		model.addAttribute("totalPengajuan", jumlahPengajuan);
 		model.addAttribute("pageTitle", "Home");
+		
 		return "home";
 	}
 	
@@ -91,6 +92,6 @@ public class PageController {
 		if (auth != null){    
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		return "redirect:/login?logout";
 	}
 }

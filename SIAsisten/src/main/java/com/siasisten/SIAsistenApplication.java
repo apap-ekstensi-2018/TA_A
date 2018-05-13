@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class SIAsistenApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SIAsistenApplication.class, args);
 	}

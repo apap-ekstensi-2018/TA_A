@@ -49,17 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authoritiesByUsernameQuery("select username, role from user_account where username=?");
 	}
 	
-	/*@Autowired
-	public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
-		BCryptPasswordEncoder encoder = passwordEncoder();
-		auth.inMemoryAuthentication()
-			.withUser("admin").password(encoder.encode("admin"))
-			.roles("ADMIN");
-		auth.inMemoryAuthentication()
-			.withUser("user").password(encoder.encode("user"))
-			.roles("USER");
-	}*/
-	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();

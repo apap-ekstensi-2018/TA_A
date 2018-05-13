@@ -25,9 +25,9 @@ public class MahasiswaServiceDatabase implements MahasiswaService {
         return mahasiswaMapper.isAsdos (npm);
 	 }
 
-		@Override
-		public MahasiswaModel selectMahasiswabyNPM(String npm) {
-			// TODO Auto-generated method stub
-			return mahasiswaDao.selectMahasiswabyNPM(npm);
-		}
+	 @Override
+	 public MahasiswaModel selectMahasiswabyNPM(String npm) {
+		log.info ("select student with npm {}", npm);
+		return mahasiswaDao.selectMahasiswabyNPM(npm);
+	 }
 }

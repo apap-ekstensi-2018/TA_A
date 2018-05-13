@@ -10,11 +10,9 @@ import com.siasisten.model.RuanganModel;
 
 @Service
 public class RuanganDAOImpl implements RuanganDAO {
-
 	@Autowired
 	@Lazy
 	private RestTemplate restTemplate;
-	
 	
 	@Override
 	public RuanganModel selectRuanganbyId(int id) {

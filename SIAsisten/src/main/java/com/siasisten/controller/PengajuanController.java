@@ -34,7 +34,6 @@ import com.siasisten.service.RuanganMatkulService;
 
 @Controller
 public class PengajuanController {
-	
 	@Autowired
 	MahasiswaService mhsDAO;
 	
@@ -65,12 +64,11 @@ public class PengajuanController {
 		        roles.add(a.getAuthority());
 		}
 			
-			
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -89,12 +87,13 @@ public class PengajuanController {
 		    model.addAttribute("pengajuan", pengajuan);
 		   	model.addAttribute("matkul", matkul);
 		   	model.addAttribute("mahasiswa", mahasiswa);
-		   	System.out.println(pengajuan.getIsAccepted());
 		   	model.addAttribute("pageTitle", "Lihat Pengajuan");
+		   	
 		    return "view-pengajuan";
 		}
 		else {
 			model.addAttribute("idlowongan", id);
+			
 			return "not-found";
 		}
     }
@@ -107,13 +106,12 @@ public class PengajuanController {
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
 		}
-			
-			
+		
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -140,13 +138,12 @@ public class PengajuanController {
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
 		}
-			
-			
+				
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -165,7 +162,6 @@ public class PengajuanController {
 		
 	}
 	
-	/*Menghapus dari URL*/
 	@RequestMapping("/pengajuan/hapus/{id_lowongan}")
 	public String deletePengajuan(@PathVariable(value = "id_lowongan") int id_lowongan, Authentication auth, Model model) 
 	{	
@@ -173,14 +169,13 @@ public class PengajuanController {
 		List<String> roles = new ArrayList<String>();
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
-		}
-			
+		}	
 			
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -202,13 +197,12 @@ public class PengajuanController {
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
 		}
-			
-			
+		
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -222,11 +216,12 @@ public class PengajuanController {
 		LowonganModel lowongan = lowonganDAO.selectLowonganbyID(pengajuan.getIdLowongan());
 		MatkulModel matkul = matkulDAO.selectMatkulbyId(lowongan.getIdMatkul());	
 		MahasiswaModel mahasiswa = mhsDAO.selectMahasiswabyNPM(pengajuan.getUsernameMhs());
+		
 		model.addAttribute("pengajuan", pengajuan);
 	   	model.addAttribute("matkul", matkul);
 	   	model.addAttribute("mahasiswa", mahasiswa);
-	   	System.out.println(pengajuan.getIsAccepted());
 	   	model.addAttribute("pageTitle", "Review Pengajuan");
+	   	
 		return "ubah-pengajuan";
 	}
 	
@@ -242,13 +237,12 @@ public class PengajuanController {
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
 		}
-			
-			
+				
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -282,12 +276,9 @@ public class PengajuanController {
 		}
 			
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName(); // get NPM login
 		
-		// get NPM login
-		String userId = auth.getName();
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		
 		if (roles.contains("ROLE_dosen"))
 		{
@@ -300,7 +291,9 @@ public class PengajuanController {
 		
 		List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
 		List<LowonganModel> allLowongan = lowonganDAO.selectAllLowongan();
+		
 		model.addAttribute("allLowongan", allLowongan);
+		
 		for(LowonganModel lMod : allLowongan) {
 			LowonganModelDTO lDto = new LowonganModelDTO();
 			lDto.setId(lMod.getId());
@@ -314,7 +307,6 @@ public class PengajuanController {
 			}	
 		}
 		
-		System.out.println(userId);
 		model.addAttribute("allLowonganDTO", allLowonganDTO);
 		model.addAttribute("pageTitle", "Ajukan Pengajuan");
 		
@@ -332,12 +324,9 @@ public class PengajuanController {
 		}
 			
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName(); // get NPM login
 		
-		// get NPM login
-		String userId = auth.getName();
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		
 		if (roles.contains("ROLE_dosen"))
 		{
@@ -368,9 +357,6 @@ public class PengajuanController {
 	
 	@RequestMapping("/pengajuan/viewall")
 	public String viewAllPengajuan(Model model) {
-		
-			
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
 		Collection<? extends GrantedAuthority> authorities
 	     = auth.getAuthorities();
@@ -379,12 +365,11 @@ public class PengajuanController {
 	        roles.add(a.getAuthority());
 	    }
 		
-		
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
 		if (roles.contains("ROLE_dosen"))
 		{
 			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
@@ -394,16 +379,13 @@ public class PengajuanController {
 			model.addAttribute("namaUser", mahasiswa.getNama());
 		}
 		
-		
-		//String userId = auth.getName();
 		int jmlPengajuan = 0;
 		int jmlDiterima = 0;
 		
 		List<PengajuanModelDTO> AllpengajuanDTO = new ArrayList<>();
 		List<PengajuanModel> Allpengajuan = new ArrayList<>();
 		
-		if (roles.contains("ROLE_mahasiswa")) {
-			
+		if (roles.contains("ROLE_mahasiswa")) {	
 			Allpengajuan = pengajuanDAO.selectAllPengajuanMhs(userId);
 
 			for (PengajuanModel peng : Allpengajuan) {
@@ -488,20 +470,22 @@ public class PengajuanController {
 		model.addAttribute("Allpengajuan", Allpengajuan);
 		model.addAttribute("pageTitle", "Lihat Seluruh Pengajuan");
 		model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
+		
 		return "viewall-pengajuan";
 	}
 	
 	@RequestMapping(value="/mata-kuliah/{idMatkul}", method = RequestMethod.GET)
 	public String viewAllAsisten(Model model, 
 			@PathVariable("idMatkul") String idMatkul) {
+		
 		model.addAttribute("pageTitle", "Lihat Seluruh Asisten");
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userId = auth.getName();
 		List<String> roles = getUserRoles(auth);
 		List<String> listMatkul = new ArrayList<>();
 		String roleUser = roles.get(0);
-		System.out.println(roleUser);
-		System.out.println(roleUser.substring(5, 10));
+		
 		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		
 		if (roles.contains("ROLE_dosen")) {
@@ -529,11 +513,9 @@ public class PengajuanController {
 			}
 			
 			model.addAttribute("matkul", mMod);
-			model.addAttribute("mahasiswa", listMhs);
-			
+			model.addAttribute("mahasiswa", listMhs);	
 			
 			return "viewall-asisten";
-			
 		}
 		else {
 			return "/error/403";
