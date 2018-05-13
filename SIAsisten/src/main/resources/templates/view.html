@@ -28,17 +28,12 @@
 										</div>
 										<div class="form-group col-md-6">
 											<table>
-												<div th:if="${ruangan.isEmpty()}">
-													<tr>
-													 <td th:text="'Data Ruangan Tidak Ada'"></td>
-													 </tr>
-												</div>
-												<div th:unless="${ruangan.isEmpty()}">
-													<tr th:each="ruangan,iterationStatus: ${ruangan}">
-													 <td th:text="' ' + ${ruangan.nama}"></td>
-													 </tr>
-												</div>
-								
+												<tr th:if="${ruangan.isEmpty()}">
+											 		<td th:text="'Data Ruangan Tidak Ada'"></td>
+												</tr>
+												<tr th:unless="${ruangan.isEmpty()}" th:each="ruangan,iterationStatus: ${ruangan}">
+												 	<td th:text="' ' + ${ruangan.nama}"></td>
+												</tr>
 											</table>		
 										</div>
 										<div class="form-group col-md-4">
@@ -55,7 +50,7 @@
 										</div>
 										<div th:if="${#httpServletRequest.isUserInRole('dosen')}" class="form-group col-md-12 text-right">
 											<a th:href="@{/lowongan/ubah/} + ${lm.id}"><input type="button" name="btnUpdate" class="btn btn-primary" value="Update" /></a>
-											<i class="fa fa-trash"></i><a href="#" data-toggle="modal" data-target="#deleteModal">delete</a>
+											<a href="#" data-toggle="modal" data-target="#deleteModal" class="text-white btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
 											
 											<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
 								                    <div class="modal-dialog modal-md" role="document">
@@ -76,8 +71,6 @@
 								                        </div>
 								                    </div>
 								                </div>
-											
-											
 										</div>
 									</div>
 								</form>
