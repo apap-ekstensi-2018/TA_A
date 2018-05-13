@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace = "fragments/fragment-new :: assets" />
+    <body>
+    	<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+	        <div class="container">
+		    	<h1 class="text-center" th:text="${matkul.kodeMatkul} + ' - ' + ${matkul.namaMatkul}"></h1>
+		    	<h4 class="text-center" th:each="item : *{matkul.dosenList}" th:text="${item.nama}"></h4>
+		    	<hr />
+		    	<table id="AsistenTable" class="display">		        
+			       <thead class="thead-dark">
+			            <tr>
+			            	<th>No</th>
+							<th>NPM</th>
+							<th>Nama Mahasiswa</th>				                
+			            </tr>
+			        </thead>			        
+			        <tbody>
+		                <tr th:each="mhs,iterationStatus: ${mahasiswa}">
+		                	<td th:text="' ' + ${iterationStatus.count}"></td>			                	
+							<td th:text= "' ' + ${mhs.npm}"></td>
+							<td th:text= "' ' + ${mhs.nama}"></td>								
+	                	</tr>
+		            </tbody>
+	    		</table>
+    		</div>
+		</div>
+	<script>
+   		$(document).ready( function () {
+   			$('#AsistenTable').DataTable({
+   				"info": false,
+		        "columnDefs": [{
+		            "targets": 'no-sort',
+		            "orderable": false,
+	      		}]
+	    	});
+		});	
+	</script>
+	
+    </body>
+</html>

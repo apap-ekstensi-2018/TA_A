@@ -40,7 +40,7 @@ public interface PengajuanMapper {
 	@Select("select count(id) from pengajuan where id_lowongan = #{id}")
 	int countPengajuanById(@Param("id")int id);
 	
-	@Select("select count(id) from pengajuan where is_accepted = 1 and id = #{id}")
+	@Select("select count(id) from pengajuan where is_accepted = 1 and id_lowongan = #{id}")
 	int countDiterimaById(@Param("id")int id);
 	
 	@Select("SELECT CASE WHEN COUNT(id) > 0 THEN 1 ELSE 0 END AS 'isRegister' FROM `pengajuan` WHERE username_mahasiswa = #{username} AND id_lowongan = #{idLowongan}")
@@ -51,4 +51,12 @@ public interface PengajuanMapper {
 	
 	@Insert("Insert into pengajuan (id_lowongan,username_mahasiswa,is_accepted) values (#{idLowongan}, #{usernameMhs}, 2)")
 	void addPengajuan(PengajuanModel pengajuan);
+	
+	@Select("select pj.username_mahasiswa from pengajuan pj join lowongan lw\r\n" + 
+			"on lw.id = pj.id_lowongan where lw.id_matkul = #{idMatkul} and pj.is_accepted = 1")
+	List<String> selectAllAsistenByIdLowongan(int idMatkul);
+	
+	@Select("select lw.id_matkul from pengajuan pj join lowongan lw\r\n" + 
+			"on lw.id = pj.id_lowongan where pj.username_mahasiswa = #{username_mahasiswa} and pj.is_accepted = 1")
+	List<String> selectAllMatkulAsistenByUsername(String username_mahasiswa);
 }

@@ -11,10 +11,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siasisten.dao.DosenDAO;
@@ -55,7 +55,7 @@ public class PengajuanController {
 	
 	@Autowired
 	MahasiswaDAO mahasiswaDAO;
-	
+		
 	@RequestMapping("/pengajuan/view/{id}")
     public String lihatPengajuan(Model model, Authentication auth, @PathVariable(value = "id") int id)
     {	
@@ -340,8 +340,8 @@ public class PengajuanController {
 				
 				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
 				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
-				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getId());
-				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getId());
+				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getIdLowongan());
+				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getIdLowongan());
 				
 				for(int i=0; i<mMod.getDosenList().size(); i++) {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
@@ -386,8 +386,8 @@ public class PengajuanController {
 				LowonganModel lMod = lowonganDAO.selectLowonganbyID(peng.getIdLowongan());
 				MatkulModel mMod = matkulDAO.selectMatkulbyId(lMod.getIdMatkul());
 				MahasiswaModel mhs = mhsDAO.selectMahasiswabyNPM(peng.getUsernameMhs());
-				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getId());
-				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getId());
+				jmlPengajuan = pengajuanDAO.countPengajuanById(peng.getIdLowongan());
+				jmlDiterima = pengajuanDAO.countDiterimaById(peng.getIdLowongan());
 				
 				for(int i=0; i<mMod.getDosenList().size(); i++) {
 					nmDosen.add(mMod.getDosenList().get(i).getNama());
@@ -417,5 +417,55 @@ public class PengajuanController {
 		model.addAttribute("pageTitle", "Lihat Seluruh Pengajuan");
 		model.addAttribute("AllpengajuanDTO",AllpengajuanDTO);
 		return "viewall-pengajuan";
+	}
+	
+	@RequestMapping(value="/mata-kuliah/{idMatkul}", method = RequestMethod.GET)
+	public String viewAllAsisten(Model model, 
+			@PathVariable("idMatkul") String idMatkul) {
+		model.addAttribute("pageTitle", "Lihat Seluruh Asisten");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userId = auth.getName();
+		List<String> roles = getUserRoles(auth);
+		List<String> listMatkul = new ArrayList<>();
+		
+		if (roles.contains("ROLE_dosen")) {
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
+			for (MatkulModel matkul : matkulDosen) {
+				int idMatkulDosen = matkul.getId();
+				listMatkul.add(Integer.toString(idMatkulDosen));
+			}
+		}
+		else if (roles.contains("ROLE_mahasiswa")) {
+			listMatkul = pengajuanDAO.selectAllMatkulAsistenByUsername(userId);
+		}
+		
+		if (listMatkul.contains(idMatkul)) {
+			MatkulModel mMod = matkulDAO.selectMatkulbyId(Integer.parseInt(idMatkul));
+			List<String> listNPM = pengajuanDAO.selectPengajuanByIdMatkul(Integer.parseInt(idMatkul));
+			List<MahasiswaModel> listMhs = new ArrayList<>();
+			for (String npm : listNPM) {
+				MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(npm);
+				listMhs.add(mahasiswa);
+			}
+			model.addAttribute("matkul", mMod);
+			model.addAttribute("mahasiswa", listMhs);
+			
+			return "viewall-asisten";
+		}
+		else {
+			return "/error/403";
+		}
+	}
+	
+	public List<String> getUserRoles (Authentication auth) {
+		Collection<? extends GrantedAuthority> authorities
+	     = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+	        roles.add(a.getAuthority());
+	    }
+		
+		return roles;
 	}
 }
