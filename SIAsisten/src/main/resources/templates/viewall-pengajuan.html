@@ -46,13 +46,11 @@
 									<form th:unless="${allPengajuans.statusPengajuan == 1}" th:action="@{/pengajuan/hapus/} + ${allPengajuans.id}" method="post">
 										<input type="submit" class="btn btn-danger" value="Batalkan Pengajuan"></input>
 									</form>
-									
 								</td>
 		                	</tr>
 			            </tbody>
 		    		</table>
 		    	</div>
-		    	
 		    	<div th:if="${viewMode.equals('dosen')}">			
 			        <table id="PengajuanTable" class="display">		        
 				       <thead class="thead-dark">
@@ -72,8 +70,7 @@
 			                	<!-- <td th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' + ${allPengajuans.namaMatkul} "></td> -->
 			                	<td>
 		                			<a th:href="'/mata-kuliah/' + ${allPengajuans.idMatkul}">
-		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' 
-			                				+ ${allPengajuans.namaMatkul}"></span>
+		                				<span th:text="' ' + ${allPengajuans.kodeMatkul} + ' - ' + ${allPengajuans.namaMatkul}"></span>
 		                			</a>
 		                		</td>
 								<td th:text= "' ' + ${allPengajuans.npmMhs}"></td>
@@ -83,7 +80,6 @@
 								<td align="center">
 									<a th:href="'/pengajuan/view/' + ${allPengajuans.id}"><i class="fa fa-search" style="color:blue;"></i></a>
 									<a th:href="'/pengajuan/review/' + ${allPengajuans.id}"><i class="fa fa-pencil-square-o" style="color:red"></i></a>
-									
 								</td>								
 		                	</tr>
 			            </tbody>

@@ -13,23 +13,21 @@
                                 <strong>Form</strong> <small> Ajukan Pengajuan</small>
                             </div>
                             <div class="card-body">
-								<form id="addPengajuan" action="/pengajuan/tambah/submit" method="post">
-					
-								<div class="form-row">
-					
+							<form id="addPengajuan" action="/pengajuan/tambah/submit" method="post">
+							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label for="">Mata Kuliah</label>
 								</div>
 								<div class="form-group col-md-6">
-									<select name="idLowongan" class="form-control">
+									<select id="idLowongan" name="idLowongan" class="form-control">
 										<option th:selected="true" th:disabled="true" value="" th:text="'Pilih Pengajuan Mata Kuliah'"></option>
 										<option th:each="allLowongans: ${allLowonganDTO}" th:text="${allLowongans.namaMatkul}" th:value="${allLowongans.id}"></option>
 									</select>
 								</div>
 								<div class="form-group col-md-12 text-right">
-									<input type="submit" name="action" class="btn btn-success" value="Simpan"></input>
+									<input onclick="myFunction()" type="button" class="btn btn-success" value="Simpan"></input>
 								</div>
-								</form>
+							</form>
 							</div>
 						</div>
 					</div>
@@ -39,3 +37,15 @@
 		
 	</body> 
 </html>
+<script>
+	function myFunction() {
+		var lowongan;
+		lowongan = document.getElementById("idLowongan").value;
+		if (lowongan == ""){
+			alert("Mata kuliah harus dipilih!");
+		}
+		else {
+			document.forms["addPengajuan"].submit();
+		}
+	}
+</script>

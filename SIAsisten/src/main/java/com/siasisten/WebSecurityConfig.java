@@ -22,8 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.authorizeRequests()
 		.antMatchers("/", "/css/**", "/js/**", "/images/**", "/new/**", "/asisten-dosen/**").permitAll()
-		.antMatchers("/lowongan/view/**", "/lowongan/viewall").hasAnyRole("mahasiswa", "dosen", "staf")
-		.antMatchers("/lowongan/tambah", "/lowongan/ubah/**", "/lowongan/hapus/**").hasAnyRole("dosen")
+		.antMatchers("/lowongan/view/**", "/lowongan/viewall", "/pengajuan/view/**", "/pengajuan/viewall"
+				, "/mata-kuliah/**").hasAnyRole("mahasiswa", "dosen")
+		.antMatchers("/lowongan/tambah", "/lowongan/ubah/**", "/lowongan/hapus/**", "/lowongan/review/**").hasRole("dosen")
+		.antMatchers("/pengajuan/tambah", "/pengajuan/hapus/**").hasRole("mahasiswa")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()

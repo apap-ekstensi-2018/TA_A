@@ -208,7 +208,7 @@ public class LowonganController {
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, Authentication auth, @RequestParam(value = "matakuliah", required = false) String matakuliah,
-										   @RequestParam(value = "isOpen", required = false) int isOpen,
+										   @RequestParam(value = "isOpen", required = false) int isOpen,	
 										   @RequestParam(value = "jml_slot", required = false) int jml_slot,
 										   @RequestParam(value = "id_lowongan", required = false) int idLowongan,
 										   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
