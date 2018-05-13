@@ -46,8 +46,8 @@ public interface PengajuanMapper {
 	@Select("SELECT CASE WHEN COUNT(id) > 0 THEN 1 ELSE 0 END AS 'isRegister' FROM `pengajuan` WHERE username_mahasiswa = #{username} AND id_lowongan = #{idLowongan}")
     int isRegister(@Param("username") String username, @Param("idLowongan") int idLowongan);
 
-	@Select("select username_mahasiswa from pengajuan where username_mahasiswa=#{username_mahasiswa}")
-	String cekPengajuan(String username_mahasiswa);
+	@Select("select CONCAT('',cast(id_lowongan as char), username_mahasiswa) as gabungan from pengajuan where username_mahasiswa = #{username_mahasiswa} and id_lowongan = #{id_lowongan}")
+	String cekPengajuan(@Param("username_mahasiswa") String username_mahasiswa, @Param("id_lowongan")int id_lowongan);
 	
 	@Insert("Insert into pengajuan (id_lowongan,username_mahasiswa,is_accepted) values (#{idLowongan}, #{usernameMhs}, 2)")
 	void addPengajuan(PengajuanModel pengajuan);

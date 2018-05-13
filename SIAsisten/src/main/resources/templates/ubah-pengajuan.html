@@ -11,43 +11,50 @@
 	<div id="right-panel" class="right-panel">
 		<div th:replace = "fragments/fragment-new :: right-panel"></div>
 			<br/>
-			<div class="container">		
-				<div class="row">
-				<form class="" id="myForm" action="/pengajuan/review/submit" method="post">			
-					<div class="form-group col-md-4">
-						<label for="mk">Lowongan</label> 
-					</div>
-					<div class="form-group col-md-6">
-						<input class="form-control" style="width:50%" type="text" name="matkul" th:value="${matkul.namaMatkul}" readonly="true"/>
-					</div>
-					<div class="form-group col-md-4">
-						<label for="mk">Nama Mahasiswa</label> 
-					</div>
-					<div class="form-group col-md-6">
-						<input class="form-control" style="width:50%" type="text" name="nama_mahasiswa" th:value="${mahasiswa.nama}" readonly="true"/>
-					</div>		
-					<div class="form-group col-md-4">
-						<label for="sl">Status Lowongan</label> 
-					</div>
-					
-					<div class="form-group col-md-6">
-							
-							<select class="form-control" id="status_pengajuan" th:field="*{pengajuan.isAccepted}" th:value="${pengajuan.isAccepted}">
-							    <option value=0>Ditolak</option>
-							    <option value=1>Diterima</option>
-							    <option value=2>Pending</option>
-							    
-							</select>
+			<div class="container">
+			<div class="card">
+                            <div class="card-header bg-dark text-white">
+                                <strong>Form</strong> <small> Ubah Pengajuan</small>
+                            </div>
+                            <div class="card-body">		
+								<div class="row">
+									<form class="" id="myForm" action="/pengajuan/review/submit" method="post">			
+										<div class="form-group col-md-4">
+											<label for="mk">Lowongan</label> 
+										</div>
+										<div class="form-group col-md-6">
+											<input class="form-control" style="width:50%" type="text" name="matkul" th:value="${matkul.namaMatkul}" readonly="true"/>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="mk">Nama Mahasiswa</label> 
+										</div>
+										<div class="form-group col-md-6">
+											<input class="form-control" style="width:50%" type="text" name="nama_mahasiswa" th:value="${mahasiswa.nama}" readonly="true"/>
+										</div>		
+										<div class="form-group col-md-4">
+											<label for="sl">Status Lowongan</label> 
+										</div>
+										
+										<div class="form-group col-md-6">
+												
+												<select class="form-control" id="status_pengajuan" th:field="*{pengajuan.isAccepted}" th:value="${pengajuan.isAccepted}">
+												    <option value=0>Ditolak</option>
+												    <option value=1>Diterima</option>
+												    <option value=2>Pending</option>
+												    
+												</select>
+											</div>
+									</div>
+									<input type="hidden" th:value="${pengajuan.id}" name="id"></input>
+									<input type="hidden" th:value="${pengajuan.idLowongan}" name="idLowongan"></input>
+									<input type="hidden" th:value="${pengajuan.usernameMhs}" name="usernameMhs"></input>
+									<div class="form-group col-md-6">
+										<button class="btn btn-success" type="submit" name="action" value="Update">Save</button>
+									</div>
+								</form>
+							</div>
 						</div>
 				</div>
-				<input type="hidden" th:value="${pengajuan.id}" name="id"></input>
-				<input type="hidden" th:value="${pengajuan.idLowongan}" name="idLowongan"></input>
-				<input type="hidden" th:value="${pengajuan.usernameMhs}" name="usernameMhs"></input>
-				<div class="form-group col-md-6">
-					<button class="btn btn-success" type="submit" name="action" value="Update">Save</button>
-				</div>
-			</form>
-		</div>
 	</div>
 </body>
 </html>

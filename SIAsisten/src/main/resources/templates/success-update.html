@@ -11,8 +11,15 @@
 		<div id="right-panel" class="right-panel">
 			<div th:replace = "fragments/fragment-new :: right-panel"></div>
 				<div class="container">
-					<h2>Sukses</h2>
-					<h5 th:text="${message}"></h5>
+						<div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <strong>Berhasil</strong> <small> Ubah Data</small>
+                            </div>
+                            <div class="card-body card-block">
+								<h2>Sukses</h2>
+								<h5 th:text="${message}"></h5>
+							</div>
+						</div>
 				</div>
 		</div>
 	</body>

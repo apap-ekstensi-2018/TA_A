@@ -6,9 +6,10 @@
         	<div th:replace = "fragments/fragment-new :: left-panel"></div>
 		</aside>
 		<div id="right-panel" class="right-panel">
-			<div th:replace = "fragments/fragment-new :: right-panel"></div>	
-			<div class="container">
-		        <table id="lowonganTable" class="display" style="margin-left='15px'">    
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<br/>	
+				<div class="container">
+		        <table id="lowonganTable" class="display">    
 			       <thead class="thead-dark">
 			            <tr>
 			            	<th>No</th>
@@ -28,18 +29,20 @@
 							<td th:text= "' ' + ${allLowongans.isOpen == 1} ? 'Buka' : 'Tutup'"></td>
 							<td th:text="' ' + ${allLowongans.jmlLowongan}"></td>
 							<td th:text="' ' + ${allLowongans.isRegister == 1} ? 'Melamar' : ''"></td>
-							<td>
-								<a th:href="'/lowongan/view/' + ${allLowongans.id}">
-									<input type="button" class="btn btn-primary" value="Lihat Detail" />
-								</a>
-								<a th:if="${allLowongans.isRegister == 0}" th:href="'/pengajuan/tambah/'">
-									<input type="button" class="btn btn-success" value="Daftar" />
+							<td align="center">
+								<a th:href="'/lowongan/view/' + ${allLowongans.id}"><i class="fa fa-search" style="color:blue;"></i></a>
+								<a th:if="${#httpServletRequest.isUserInRole('mahasiswa')}">
+									<a th:if="${allLowongans.isRegister == 0}" th:href="'/pengajuan/tambah/'">
+										<i class="fa fa-plus-square" style="color:red;"></i>
+										
+									</a>
 								</a>
 							</td>
 		                </tr>
 		            </tbody>
 	    		</table>
 		    </div>
+		   
 		</div>
 		<script type="text/javascript">
 		    $(document).ready( function () {

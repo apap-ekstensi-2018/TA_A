@@ -95,7 +95,8 @@ public class LowonganController {
 		DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
 		model.addAttribute("namaUser", dosen.getNama());
 		List<MatkulModel> matkul = dosen.getMataKuliahList();
-		
+		System.out.println(userId);
+		System.out.println(matkul);
 		//List<MatkulModel> matkul = matkulDao.selectAllMatkul();
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("pageTitle", "Tambah Lowongan");
@@ -199,6 +200,7 @@ public class LowonganController {
 		MatkulModel matkul = matkulDao.selectMatkulbyId(lowongan.getIdMatkul());
 		model.addAttribute("matkul", matkul);
 		model.addAttribute("lowongan", lowongan);
+		System.out.println(lowongan.getIsOpen());
 		model.addAttribute("pageTitle", "Ubah Lowongan");
 		model.addAttribute("id_lowongan", id_lowongan);
 		return "ubah-lowongan";
@@ -206,7 +208,7 @@ public class LowonganController {
 	
 	@PostMapping("/lowongan/ubah/submit")
 	public String ubahSubmit (Model model, Authentication auth, @RequestParam(value = "matakuliah", required = false) String matakuliah,
-										   @RequestParam(value = "status", required = false) int statusFixed,
+										   @RequestParam(value = "isOpen", required = false) int isOpen,
 										   @RequestParam(value = "jml_slot", required = false) int jml_slot,
 										   @RequestParam(value = "id_lowongan", required = false) int idLowongan,
 										   @RequestParam(value = "id_matkul", required = false) int id_matkul) 
@@ -233,7 +235,7 @@ public class LowonganController {
 			model.addAttribute("namaUser", mahasiswa.getNama());
 		}
 		
-		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, statusFixed, jml_slot);
+		LowonganModel lowongan = new LowonganModel(idLowongan, id_matkul, isOpen, jml_slot);
 		lowonganDAO.updateLowongan(lowongan);
 		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , mata kuliah " + matakuliah + " berhasil diubah");
 		return "success-update";
@@ -292,8 +294,8 @@ public class LowonganController {
 			List<LowonganModelDTO> allLowonganDTO = new ArrayList<>();
 
 			String roleUser = roles.get(0);
-			System.out.println(roleUser);
-			System.out.println(roleUser.substring(5, 10));
+			//System.out.println(roleUser);
+			//System.out.println(roleUser.substring(5, 10));
 			model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 
 			if (roles.contains("ROLE_dosen"))
@@ -301,18 +303,23 @@ public class LowonganController {
 				DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
 				model.addAttribute("namaUser", dosen.getNama());
 				List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
+				System.out.println(matkulDosen);
+				//List<String> idList = new ArrayList<>();
+				
 				listIdMatkul = matkulDosen.stream()
 						.map(p -> String.valueOf(p.getId()))
 						.collect(Collectors.joining(","));
 				
 				List<LowonganModel> allLowongan = lowonganDAO.selectAllLowonganByDosen(listIdMatkul);
-				
+				System.out.println(listIdMatkul);
 				model.addAttribute("allLowongan", allLowongan);
+				System.out.println(lowonganDAO.selectAllLowonganByDosen(listIdMatkul));
 				for(LowonganModel lMod : allLowongan) {
 					LowonganModelDTO lDto = new LowonganModelDTO();
 					lDto.setId(lMod.getId());
 					MatkulModel mMod = matkulDao.selectMatkulbyId(lMod.getIdMatkul());
 					lDto.setNamaMatkul(mMod.getNamaMatkul());
+					System.out.println(mMod.getNamaMatkul());
 					lDto.setIsOpen(lMod.getIsOpen());
 					lDto.setJmlLowongan(lMod.getJmlLowongan());
 					allLowonganDTO.add(lDto);
@@ -341,6 +348,7 @@ public class LowonganController {
 			
 			model.addAttribute("listIdMatkul", listIdMatkul);
 			model.addAttribute("allLowonganDTO", allLowonganDTO);
+			System.out.println(allLowonganDTO);
 			model.addAttribute("pageTitle", "View All Lowongan");
 		    return "viewall";
     }

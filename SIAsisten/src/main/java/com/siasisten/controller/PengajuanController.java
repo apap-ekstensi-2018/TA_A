@@ -181,7 +181,7 @@ public class PengajuanController {
 	}
 	
 	@RequestMapping("/pengajuan/tambah")
-	public String tambahPengajuan(Model model, @ModelAttribute("pengajuan") PengajuanModel pengajuan, Authentication auth)
+	public String tambahPengajuan(Model model, Authentication auth)
 	{
 		// get role and name
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
@@ -189,7 +189,6 @@ public class PengajuanController {
 		for (GrantedAuthority a : authorities) {
 		        roles.add(a.getAuthority());
 		}
-			
 			
 		String roleUser = roles.get(0);
 		System.out.println(roleUser);
@@ -224,24 +223,64 @@ public class PengajuanController {
 			}	
 		}
 		
-		
-		
-		
 		System.out.println(userId);
 		model.addAttribute("allLowonganDTO", allLowonganDTO);
 		model.addAttribute("pageTitle", "Ajukan Pengajuan");
 		
 		return "form-addPengajuan";
-		
-		
 	}
 	
-	public String isExistUsername(String usernameMhs) {
-		return pengajuanDAO.cekPengajuan(usernameMhs);
+	@RequestMapping("/pengajuan/tambah/submit")
+	public String tambahSubmit (Model model, Authentication auth, 
+			   @RequestParam(value = "idLowongan", required = false) int idLowongan)
+			 
+	{	
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		
+		// get NPM login
+		String userId = auth.getName();
+		
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		System.out.println("id="+idLowongan);
+		
+		int id = 0, isAccepted = 0;
+		
+		if ((isExistPengajuan(userId, idLowongan)==null)) {
+			PengajuanModel pengajuan = new PengajuanModel(id, idLowongan, userId, isAccepted);
+			pengajuanDAO.addPengajuan(pengajuan);
+			model.addAttribute("message", "Pengajuan Asisten dengan id " + idLowongan + " , NPM" + userId + " berhasil ditambahkan");
+			return "success-addPengajuan";
+		}else{
+			return "failed-addPengajuan";
+		}
 	}
+	
+	public String isExistPengajuan(String username_mahasiswa, int id_lowongan) {
+		return pengajuanDAO.cekPengajuan(username_mahasiswa, id_lowongan);
+	}
+	
 	
 	@RequestMapping("/pengajuan/viewall")
 	public String viewAllPengajuan(Model model) {
+		
+			
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
 		Collection<? extends GrantedAuthority> authorities
 	     = auth.getAuthorities();
@@ -250,7 +289,23 @@ public class PengajuanController {
 	        roles.add(a.getAuthority());
 	    }
 		
+		
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
 		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		
+		
+		//String userId = auth.getName();
 		int jmlPengajuan = 0;
 		int jmlDiterima = 0;
 		

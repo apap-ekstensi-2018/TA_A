@@ -84,9 +84,9 @@ public class PengajuanServiceDatabase implements PengajuanService{
 		return pengajuanMapper.isRegister(username, idLowongan);
 	}
 
-	public String cekPengajuan(String username_mahasiswa) {
+	public String cekPengajuan(String username_mahasiswa, int id_lowongan) {
 		// TODO Auto-generated method stub
-		return pengajuanMapper.cekPengajuan(username_mahasiswa);
+		return pengajuanMapper.cekPengajuan(username_mahasiswa, id_lowongan);
 	}
 
 	@Override
