@@ -19,4 +19,5 @@ public interface PengajuanService {
 	String cekPengajuan(String username_mahasiswa, int id_lowongan);
 	void addPengajuan(PengajuanModel pengajuan);
 	List<String> selectPengajuanByIdMatkul(int idMatkul);
+	List<String> selectAllMatkulAsistenByUsername(String username_mahasiswa);
 }

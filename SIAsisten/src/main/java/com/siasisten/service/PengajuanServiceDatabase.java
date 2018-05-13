@@ -100,4 +100,10 @@ public class PengajuanServiceDatabase implements PengajuanService{
 		// TODO Auto-generated method stub
 		return pengajuanMapper.selectAllAsistenByIdLowongan(idMatkul);
 	}
+
+	@Override
+	public List<String> selectAllMatkulAsistenByUsername(String username_mahasiswa) {
+		// TODO Auto-generated method stub
+		return pengajuanMapper.selectAllMatkulAsistenByUsername(username_mahasiswa);
+	}
 }

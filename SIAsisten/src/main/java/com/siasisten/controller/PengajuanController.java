@@ -56,7 +56,7 @@ public class PengajuanController {
 	
 	@Autowired
 	MahasiswaDAO mahasiswaDAO;
-	
+		
 	@RequestMapping("/pengajuan/view/{id}")
     public String lihatPengajuan(Model model, Authentication auth, @PathVariable(value = "id") int id)
     {	
@@ -404,16 +404,50 @@ public class PengajuanController {
 	@RequestMapping(value="/mata-kuliah/{idMatkul}", method = RequestMethod.GET)
 	public String viewAllAsisten(Model model, 
 			@PathVariable("idMatkul") String idMatkul) {
-		MatkulModel mMod = matkulDAO.selectMatkulbyId(Integer.parseInt(idMatkul));
-		List<String> listNPM = pengajuanDAO.selectPengajuanByIdMatkul(Integer.parseInt(idMatkul));
-		List<MahasiswaModel> listMhs = new ArrayList<>();
-		for (String npm : listNPM) {
-			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(npm);
-			listMhs.add(mahasiswa);
-		}
-		model.addAttribute("matkul", mMod);
-		model.addAttribute("mahasiswa", listMhs);
 		model.addAttribute("pageTitle", "Lihat Seluruh Asisten");
-		return "viewall-asisten";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userId = auth.getName();
+		List<String> roles = getUserRoles(auth);
+		List<String> listMatkul = new ArrayList<>();
+		
+		if (roles.contains("ROLE_dosen")) {
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			List<MatkulModel> matkulDosen = dosen.getMataKuliahList();
+			for (MatkulModel matkul : matkulDosen) {
+				int idMatkulDosen = matkul.getId();
+				listMatkul.add(Integer.toString(idMatkulDosen));
+			}
+		}
+		else if (roles.contains("ROLE_mahasiswa")) {
+			listMatkul = pengajuanDAO.selectAllMatkulAsistenByUsername(userId);
+		}
+		
+		if (listMatkul.contains(idMatkul)) {
+			MatkulModel mMod = matkulDAO.selectMatkulbyId(Integer.parseInt(idMatkul));
+			List<String> listNPM = pengajuanDAO.selectPengajuanByIdMatkul(Integer.parseInt(idMatkul));
+			List<MahasiswaModel> listMhs = new ArrayList<>();
+			for (String npm : listNPM) {
+				MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(npm);
+				listMhs.add(mahasiswa);
+			}
+			model.addAttribute("matkul", mMod);
+			model.addAttribute("mahasiswa", listMhs);
+			
+			return "viewall-asisten";
+		}
+		else {
+			return "/error/403";
+		}
+	}
+	
+	public List<String> getUserRoles (Authentication auth) {
+		Collection<? extends GrantedAuthority> authorities
+	     = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+	        roles.add(a.getAuthority());
+	    }
+		
+		return roles;
 	}
 }
