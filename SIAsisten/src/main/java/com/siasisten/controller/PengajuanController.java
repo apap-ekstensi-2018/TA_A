@@ -162,33 +162,6 @@ public class PengajuanController {
 		
 	}
 	
-	@RequestMapping("/pengajuan/hapus/{id_lowongan}")
-	public String deletePengajuan(@PathVariable(value = "id_lowongan") int id_lowongan, Authentication auth, Model model) 
-	{	
-		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-		List<String> roles = new ArrayList<String>();
-		for (GrantedAuthority a : authorities) {
-		        roles.add(a.getAuthority());
-		}	
-			
-		String roleUser = roles.get(0);
-		String userId = auth.getName();
-		
-		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
-		
-		if (roles.contains("ROLE_dosen"))
-		{
-			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
-			model.addAttribute("namaUser", dosen.getNama());
-		}else {
-			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
-			model.addAttribute("namaUser", mahasiswa.getNama());
-		}
-		
-		pengajuanDAO.deletePengajuan(id_lowongan);
-		return "success-delete-pengajuan";
-	}
-	
 	@RequestMapping("/pengajuan/review/{id_pengajuan}")
 	public String pengajuanUbah (Model model, @PathVariable(value = "id_pengajuan", required = false) int id_pengajuan, Authentication auth) 
 	{	
