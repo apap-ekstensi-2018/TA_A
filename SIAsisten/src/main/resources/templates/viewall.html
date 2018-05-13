@@ -17,7 +17,7 @@
 							<th>Nama Mata Kuliah</th>
 			                <th>Status</th>
 			                <th>Jumlah Lowongan</th>
-			                <th>Status Pengajuan</th>
+			                <th th:if="${#httpServletRequest.isUserInRole('mahasiswa')}">Status Pengajuan</th>
 			                <th class="no-sort">Action</th>
 			            </tr>
 			        </thead>
@@ -28,14 +28,11 @@
 							<td th:text="' ' + ${allLowongans.namaMatkul}"></td>
 							<td th:text= "' ' + ${allLowongans.isOpen == 1} ? 'Buka' : 'Tutup'"></td>
 							<td th:text="' ' + ${allLowongans.jmlLowongan}"></td>
-							<td th:text="' ' + ${allLowongans.isRegister == 1} ? 'Melamar' : ''"></td>
+							<td th:if="${#httpServletRequest.isUserInRole('mahasiswa')}" th:text="' ' + ${allLowongans.isRegister == 1} ? 'Melamar' : ''"></td>
 							<td align="center">
 								<a th:href="'/lowongan/view/' + ${allLowongans.id}"><i class="fa fa-search" style="color:blue;"></i></a>
-								<a th:if="${#httpServletRequest.isUserInRole('mahasiswa')}">
-									<a th:if="${allLowongans.isRegister == 0}" th:href="'/pengajuan/tambah/'">
-										<i class="fa fa-plus-square" style="color:red;"></i>
-										
-									</a>
+								<a th:if="${#httpServletRequest.isUserInRole('mahasiswa') && allLowongans.isRegister == 0}" th:href="'/pengajuan/tambah/'">
+									<i class="fa fa-plus-square" style="color:red;"></i>
 								</a>
 							</td>
 		                </tr>
