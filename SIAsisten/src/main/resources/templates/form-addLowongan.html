@@ -7,36 +7,48 @@
 		</aside>
 		<div id="right-panel" class="right-panel">
 			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<br/>
 			<div class="container">
 				<form id="myForm" action="/lowongan/tambah" method="post">
 					<div class="form-row">
-						<div class="form-group col-md-4">
-							<label for="">Mata Kuliah</label>
-						</div>
-						<div class="form-group col-md-6">
-							<select name="idMatkul" class="form-control">
-								<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
-								<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
-							</select>
-						</div>
-						<div class="form-group col-md-4">
-							<label for="">Status Lowongan</label>
-						</div>
-						<div class="form-group col-md-6">
-							<select name="isOpen" class="form-control">
-								<option>--Pilih Status--</option>	
-								<option value=1>Buka</option>
-								<option value=0>Tutup</option>
-							</select>
-						</div>
-						<div class="form-group col-md-4">
-							<label for="jmlLowongan">Jumlah Lowongan</label>
-						</div>
-						<div class="form-group col-md-6">
-							<input type="text" class="form-control" id="jmlLowongan" name="jmlLowongan" required="required"/> 
-						</div>
-						<div class="form-group col-md-12 text-right">
-							<button onclick="myFunction()" type="button" name="action" class="btn btn-success">Simpan</button>
+					<div class="card">
+                            <div class="card-header bg-warning text-white">
+                                <strong>Form</strong> <small> Tambah Lowongan</small>
+                            </div>
+                            <div class="card-body card-block">
+								<div class="form-group col-md-4">
+									<label for="">Mata Kuliah</label>
+								</div>
+								<div class="form-group col-md-6">
+								
+									<select name="idMatkul" class="form-control">
+										<option th:selected="true" th:disabled="true" value="" th:text="'Pilih mata kuliah'"></option>
+										<option th:each="mata_kuliah : ${matkul}" th:text="${mata_kuliah.namaMatkul}" th:value="${mata_kuliah.id}"></option>
+									</select>
+								</div>
+								
+								<div class="form-group col-md-4">
+									<label for="">Status Lowongan</label>
+								</div>
+								<div class="form-group col-md-6">
+									<select name="isOpen" class="form-control">
+										<option>--Pilih Status--</option>	
+										<option value=1>Buka</option>
+										<option value=0>Tutup</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="jmlLowongan">Jumlah Lowongan</label>
+								</div>
+								<div class="form-group col-md-6">
+									<input type="text" class="form-control" id="jmlLowongan" name="jmlLowongan" required="required"/>
+									
+								</div>
+								
+								<div class="form-group col-md-12 text-right">
+									<button onclick="myFunction()" type="button" name="action" class="btn btn-success">Simpan</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</form>

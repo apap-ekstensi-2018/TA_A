@@ -7,42 +7,53 @@
 		</aside>
 		<div id="right-panel" class="right-panel">
 			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<br/>
 			<div class="container">
-				<br><br><br>
-				<form class="" id="myForm" action="/lowongan/ubah/submit" method="post">
-					<div class="form-row">
-						<div class="form-group col-md-4">
-							<label for="matakuliah">Mata Kuliah</label>
+				<div class="card">
+                            <div class="card-header bg-success text-white">
+                                <strong>Form</strong> <small> Ubah Lowongan</small>
+                            </div>
+                            <div class="card-body card-block">
+								<form class="" id="myForm" action="/lowongan/ubah/submit" method="post">
+									<div class="form-row">
+										<div class="form-group col-md-4">
+											<label for="matakuliah">Mata Kuliah</label>
+										</div>
+										<div class="form-group col-md-6">
+											<input class="form-control" type="text" id="matakuliah" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="status">Status Lowongan</label>
+										</div>
+										<div class="form-group col-md-6">
+									
+											<select class="form-control" id="status" th:field="*{lowongan.isOpen}" th:value="${lowongan.isOpen}">
+																    <option value=0>Tutup</option>
+																    <option value=1>Buka</option>
+																   
+																    
+											</select>
+											
+											
+										</div>
+										<div class="form-group col-md-4">
+											<label for="jml_slot">Jumlah Slot</label>
+										</div>
+										<div class="form-group col-md-6">
+											<input class="form-control" type="text" id="jml_slot" name="jml_slot" th:value="${lowongan.jmlLowongan}"/><br/>
+										</div>
+										<input type="hidden" th:value="${id_lowongan}" name="id_lowongan"></input>
+										<input type="hidden" th:value="${matkul.id}" name="id_matkul"></input>
+										<div class="form-group col-md-12 text-right">
+											<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
+											<a th:href="'/lowongan/viewall'">
+													<button type="button" class="btn btn-danger">Cancel</button>
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
-						<div class="form-group col-md-6">
-							<input class="form-control" type="text" id="matakuliah" name="matakuliah" th:value="${matkul.namaMatkul}" readonly="readonly"/>
-						</div>
-						<div class="form-group col-md-4">
-							<label for="status">Status Lowongan</label>
-						</div>
-						<div class="form-group col-md-6">
-							<select class="form-control" name="status" id="status">
-								<option th:value="${is_open}" th:text="${is_open == true} ? 'Buka' : 'Tutup'" th:selected="true"></option>
-								<option value=1 th:if="${is_open != true}" th:inline="text">Buka</option>
-								<option value=0 th:if="${is_open != false}" th:inline="text">Tutup</option>
-							</select>
-						</div>
-						<div class="form-group col-md-4">
-							<label for="jml_slot">Jumlah Slot</label>
-						</div>
-						<div class="form-group col-md-6">
-							<input class="form-control" type="text" id="jml_slot" name="jml_slot" th:value="${lowongan.jmlLowongan}"/><br/>
-						</div>
-						<input type="hidden" th:value="${id_lowongan}" name="id_lowongan"></input>
-						<input type="hidden" th:value="${matkul.id}" name="id_matkul"></input>
-						<div class="form-group col-md-12 text-right">
-							<input onclick="basicValidation()" type="submit" class="btn btn-success" value="Save" />
-							<a th:href="'/lowongan/viewall'">
-									<button type="button" class="btn btn-danger">Cancel</button>
-							</a>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 		<script type="text/javascript">

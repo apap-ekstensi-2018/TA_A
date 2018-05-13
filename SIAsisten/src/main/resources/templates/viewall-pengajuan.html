@@ -7,6 +7,7 @@
 		</aside>
 		<div id="right-panel" class="right-panel">
 			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<br/>
 	        <div class="container">
 		        <div th:if="${viewMode.equals('mahasiswa')}">			
 			        <table id="PengajuanTable" class="display">		        
@@ -76,8 +77,10 @@
 								<td th:text= "' ' + ${allPengajuans.namaMhs}"></td>
 								<td th:text= "' ' + ${allPengajuans.statusLowongan == 1} ? 'Buka':'Tutup'"></td>
 								<td th:text= "' ' + ${allPengajuans.statusPengajuan == 1} ? 'Diterima' : (${allPengajuans.statusPengajuan == 0} ? 'Ditolak' : 'Pending')"></td>
-								<td>
-									<a th:href="'/pengajuan/view/' + ${allPengajuans.id}"><input type="button" class="btn btn-primary" value="Lihat Detail" /></a>
+								<td align="center">
+									<a th:href="'/pengajuan/view/' + ${allPengajuans.id}"><i class="fa fa-search" style="color:blue;"></i></a>
+									<a th:href="'/pengajuan/review/' + ${allPengajuans.id}"><i class="fa fa-pencil-square-o" style="color:red"></i></a>
+									
 								</td>								
 		                	</tr>
 			            </tbody>
