@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment-new :: assets" />
+<body>
+	<aside id="left-panel" class="left-panel">
+        	<div th:replace = "fragments/fragment-new :: left-panel"></div>
+		</aside>
+		<div id="right-panel" class="right-panel">
+			<div th:replace = "fragments/fragment-new :: right-panel"></div>
+			<div class="container">
+			<div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <strong>Gagal</strong> <small> Membatalkan Pengajuan</small>
+                            </div>
+                            <div class="card-body card-block">
+								<div><H3>Gagal Membatalkan Pengajuan ,Karena Anda Sudah Diterima</H3></div>
+							</div>
+			</div>
+			</div>
+		</div>
+	
+</body>
+</html>

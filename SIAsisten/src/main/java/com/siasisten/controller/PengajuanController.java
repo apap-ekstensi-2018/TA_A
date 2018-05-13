@@ -100,7 +100,7 @@ public class PengajuanController {
     }
 	
 	@PostMapping("/pengajuan/hapus/{id_lowongan}")
-	public String hapusPengajuan(@PathVariable(value = "id_lowongan") int id_lowongan, Authentication auth, Model model) 
+	public String hapusPengajuanPost(@PathVariable(value = "id_lowongan", required = false) int id_lowongan, Authentication auth, Model model) 
 	{	
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
 		List<String> roles = new ArrayList<String>();
@@ -122,9 +122,47 @@ public class PengajuanController {
 			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
 			model.addAttribute("namaUser", mahasiswa.getNama());
 		}
+		PengajuanModel pengajuan = pengajuanDAO.selectPengajuanById(id_lowongan);
+		if (pengajuan.getIsAccepted()==1){
+			return "failed-delete";
+		}else {
+			pengajuanDAO.deletePengajuan(id_lowongan);
+			return "success-delete-pengajuan";
+		}
 		
-		pengajuanDAO.deletePengajuan(id_lowongan);
-		return "success-delete-pengajuan";
+		
+	}
+	@RequestMapping("/pengajuan/hapus/{id_lowongan}")
+	public String hapusPengajuan(@PathVariable(value = "id_lowongan", required = false) int id_lowongan, Authentication auth, Model model) 
+	{	
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
+		PengajuanModel pengajuan = pengajuanDAO.selectPengajuanById(id_lowongan);
+		if (pengajuan.getIsAccepted()==1){
+			return "failed-delete";
+		}else {
+			pengajuanDAO.deletePengajuan(id_lowongan);
+			return "success-delete-pengajuan";
+		}
+		
 	}
 	
 	@RequestMapping("/pengajuan/review/{id_pengajuan}")
@@ -193,8 +231,14 @@ public class PengajuanController {
 		
 		
 		PengajuanModel pengajuan = new PengajuanModel(id, idLowongan, usernameMhs, isAccepted);
+		String status="";
+		if (pengajuan.getIsAccepted()==0) {
+			status ="Ditolak";
+		}else {
+			status ="Diterima";
+		}
 		pengajuanDAO.updatePengajuan(pengajuan);
-		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , NPM" + usernameMhs + " berhasil diubah");
+		model.addAttribute("message", "Lowongan dengan id " + idLowongan + " , NPM " + usernameMhs + "Dengan Status " +status + " berhasil diubah");
 		return "success-update";
 	}
 	

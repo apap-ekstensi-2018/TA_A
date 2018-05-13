@@ -44,7 +44,28 @@
 								<div class="form-group col-md-12 text-right">
 								<form id="myForm" th:action="@{/pengajuan/hapus/} + ${pengajuan.id}" method="post">
 									<input id="is_accepted" type="hidden" th:value="${pengajuan.isAccepted}"></input>
-									<button onclick="myFunction()" type="button" class="btn btn-danger">Delete</button>
+									<i class="fa fa-trash"></i><a href="#" data-toggle="modal" data-target="#deleteModal">delete</a>
+											
+											<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+								                    <div class="modal-dialog modal-md" role="document">
+								                        <div class="modal-content">
+								                            <div class="modal-header">
+								                                <h5 class="modal-title" id="smallmodalLabel">Delete Pengajuan</h5>
+								                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								                                    <span aria-hidden="true">&times;</span>
+								                                </button>
+								                            </div>
+								                            <div class="modal-body">
+								                            <p align="left"> Apakah anda yakin ? <br /></p>
+								                                			<button onclick="myFunction()" type="button" class="btn btn-danger">Yes</button>
+														                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+													            
+								                            </div>
+								                            
+								                        </div>
+								                    </div>
+								                </div>
+									
 								</form>
 	
 								</div>
