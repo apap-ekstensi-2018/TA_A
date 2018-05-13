@@ -164,13 +164,32 @@ public class PengajuanController {
 	}
 	
 	@PostMapping("/pengajuan/review/submit")
-	public String ubahSubmit (Model model, @RequestParam(value = "id", required = false) int id,
+	public String ubahSubmit (Model model, Authentication auth, @RequestParam(value = "id", required = false) int id,
 										   @RequestParam(value = "idLowongan", required = false) int idLowongan,
 										   @RequestParam(value = "usernameMhs", required = false) String usernameMhs,
 										   @RequestParam(value = "isAccepted", required = false) int isAccepted) 
 	{
 		
-		
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		List<String> roles = new ArrayList<String>();
+		for (GrantedAuthority a : authorities) {
+		        roles.add(a.getAuthority());
+		}
+			
+			
+		String roleUser = roles.get(0);
+		System.out.println(roleUser);
+		System.out.println(roleUser.substring(5, 10));
+		model.addAttribute("role",roleUser.substring(5, roleUser.length()));
+		String userId = auth.getName();
+		if (roles.contains("ROLE_dosen"))
+		{
+			DosenModel dosen = dosenDAO.selectDosenbyNIP(userId);
+			model.addAttribute("namaUser", dosen.getNama());
+		}else {
+			MahasiswaModel mahasiswa = mahasiswaDAO.selectMahasiswabyNPM(userId);
+			model.addAttribute("namaUser", mahasiswa.getNama());
+		}
 		
 		
 		PengajuanModel pengajuan = new PengajuanModel(id, idLowongan, usernameMhs, isAccepted);
